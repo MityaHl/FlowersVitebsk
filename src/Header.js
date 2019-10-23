@@ -1,11 +1,28 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
+
 
 class Header extends Component{
 
   constructor(props) {
     super(props);
     this.showNothing = this.showNothing.bind(this);
+    this.logOut = this.logOut.bind(this);
+  }
+
+  logOut() {
+    axios
+      .post('https://flora-vitebsk.herokuapp.com/loginOut?token=' + cookies.get("Auth-Token"))
+      .then(
+        response => {
+          cookies.remove('Auth-Token');
+          }
+      )
   }
 
   showNothing() {
@@ -40,6 +57,7 @@ class Header extends Component{
                 <Link to={'/pricelist'}>
                     <button className="btn btn-outline-light menu-btn"> Список товаров </button>
                 </Link>
+                <button onClick={this.logOut} className="btn btn-outline-light menu-btn"> Выйти </button>
             </div>
               ) : (
                 <div></div>
