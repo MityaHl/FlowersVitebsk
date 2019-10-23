@@ -16,15 +16,9 @@ class LogIn extends Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.getCookie = this.getCookie.bind(this);
     }
 
-    getCookie(name) {
-        let matches = document.cookie.match(new RegExp(
-            '(?:^|; )' + name.replace(/([.$?|{}()[]\/+^])/g, '\$1') + '=([^;])'
-        ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
+    
 
     handleSubmit() {
         axios

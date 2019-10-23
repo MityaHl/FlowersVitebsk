@@ -18,15 +18,8 @@ class List extends Component {
         this.showPosts = this.showPosts.bind(this);
         this.findBtnValue = this.findBtnValue.bind(this);
         this.findByNumber = this.findByNumber.bind(this);
-        this.getCookie = this.getCookie.bind(this);
     }
 
-    getCookie(name) {
-        let matches = document.cookie.match(new RegExp(
-            '(?:^|; )' + name.replace(/([.$?|{}()[]\/+^])/g, '\$1') + '=([^;])'
-        ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
 
     promiseRequests() {
         let countQuery = 0;

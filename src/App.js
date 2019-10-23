@@ -7,24 +7,40 @@ import Create from './Create';
 import Prices from './Prices';
 import CreateProduct from './CreateProduct';
 import LogIn from './LogIn';
+import axios from 'axios';
 import Edit from './Edit';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      isAuth: false
+      isAuth: true
     }
 
     this.changeAuth = this.changeAuth.bind(this);
   }
 
-  changeAuth() {
-    this.setState({
-      isAuth: !this.state.isAuth
-    });
+  componentWillMount() {
+    axios
+      .get('https://flora-vitebsk.herokuapp.com/checkToken?token=' + cookies.get("Auth-Token"))
+      .catch(
+        error => {
+          this.setState({
+            isAuth: false
+        })}
+      )
   }
+
+    changeAuth() {
+      this.setState({
+        isAuth: !this.state.isAuth
+      });
+    }
 
     render() {
       return (
