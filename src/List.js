@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import OneOrder from './OneOrder';
+import {Redirect} from "react-router-dom";
 
 class List extends Component {
 
@@ -9,13 +10,22 @@ class List extends Component {
         this.state = {
             orders: [], 
             isResolve: false,
-            findBtn: ''
+            findBtn: '',
+            isAuth: false
         }
 
         this.promiseRequests = this.promiseRequests.bind(this);
         this.showPosts = this.showPosts.bind(this);
         this.findBtnValue = this.findBtnValue.bind(this);
         this.findByNumber = this.findByNumber.bind(this);
+        this.getCookie = this.getCookie.bind(this);
+    }
+
+    getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            '(?:^|; )' + name.replace(/([.$?|{}()[]\/+^])/g, '\$1') + '=([^;])'
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
     }
 
     promiseRequests() {
@@ -71,6 +81,9 @@ class List extends Component {
 
 
     render() {
+
+
+
         return(
             <div>
                 <div className="search container">

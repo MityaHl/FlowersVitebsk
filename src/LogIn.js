@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Redirect} from "react-router-dom";
 
 class LogIn extends Component {
 
@@ -9,17 +10,34 @@ class LogIn extends Component {
             info: {
                 login: '',
                 password: ''
-            }
+            }, 
+            token: '',
+            redirect: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.getCookie = this.getCookie.bind(this);
+    }
+
+    getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            '(?:^|; )' + name.replace(/([.$?|{}()[]\/+^])/g, '\$1') + '=([^;])'
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
     }
 
     handleSubmit() {
         axios
-            .post('', this.state.info)
+            .post('https://flora-vitebsk.herokuapp.com/login', this.state.info)
             .then(
-                this.props.changeAuth()
+                response => {
+                    this.setState({
+                        token : response.data.value,
+                        redirect: true
+                    });
+                    this.props.changeAuth();
+                    document.cookie = "Auth-Token=" + this.state.token;
+                }             
             )
     }
 
@@ -34,6 +52,10 @@ class LogIn extends Component {
     }
 
     render(){
+        if (this.state.redirect) {
+            return <Redirect to='/list'/>;
+        }
+
         return(
             <div className="container mt-5">
                 <form>
@@ -45,7 +67,7 @@ class LogIn extends Component {
                         <label >Пароль</label>
                         <input type="password" className="form-control" name="password" placeholder="Password" onChange={this.handleChange}/>
                     </div>
-                    <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Войти</button>
+                    <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Войти</button>
                 </form>
             </div>
         )

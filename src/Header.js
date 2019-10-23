@@ -31,7 +31,7 @@ class Header extends Component{
                 <Link to={'/create'}>
                     <button className="btn btn-outline-light menu-btn"> Добавить заказ </button>
                 </Link>
-                <Link to={'/'}>
+                <Link to={'/list'}>
                     <button className="btn btn-outline-light menu-btn"> Список заказов </button>
                 </Link>
                 <Link to={'/createproduct'}>
