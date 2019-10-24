@@ -57,7 +57,7 @@ class Header extends Component{
                 <Link to={'/pricelist'}>
                     <button className="btn btn-outline-light menu-btn"> Список товаров </button>
                 </Link>
-                <button onClick={this.logOut} className="btn btn-outline-light menu-btn"> Выйти </button>
+                <button onClick={this.logOut} className="btn btn btn-danger"> Выйти </button>
             </div>
               ) : (
                 <div></div>

@@ -68,91 +68,135 @@ class Edit extends Component {
     }
 
     render() {
+        const order = this.state.order;
+        
         return(
-            <div className="create container">
-                <form onSubmit={this.saveChanges}>
-                            
-                            <div className="form-group">    
-                                <h5>Дата доставки:</h5>
-                                <DateTimePicker
-                                    time={false}
+            <div>
+                {
+                order instanceof Object && this.state.isResolve ? (
+                    <div className="create container">
+                    <form onSubmit={this.saveChanges}>
+                                
+                                <div className="form-group">    
+                                    <h5>Дата доставки:</h5>
+                                    <DateTimePicker
+                                        time={false}
+                                        value={new Date(this.state.order.date)}
+                                        onChange={ value => {
+                                            this.setState({
+                                                order: {
+                                                    ...this.state.order,
+                                                    date: value
+                                                }
+                                            })
+                                        } }
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <h5>Время доставки (от/до):</h5>
+                                    <div className="form-row">  
+                                        <input type="time" name="timeFrom" className="form-control col-2 ml-5px" value={this.state.order.timeFrom} onChange={this.handleChange}/>
+                                        <input type="time" name="timeTo" className="form-control col-2 ml-5px" value={this.state.order.timeTo} onChange={this.handleChange}/>
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <h5>Заказ :</h5>
+                                    <Multiselect
+                                        onChange={ value => {
+                                            this.setState({
+                                                order: {
+                                                    ...this.state.order,
+                                                    orderList: value
+                                                }
+                                            })
+                                        } }
+                                        data={['букет1', 'букет2', 'роза']}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <h5>Сумма заказа:</h5>
+                                    <input type="text" className="form-control" placeholder="Сумма заказа" name="orderPrice" value={this.state.order.orderPrice} onChange={this.handleChange}/>
+                                </div>
+
+                                <div className="form-group">
+                                    <h5>Имя заказчика:</h5>
+                                    <input type="text" className="form-control" placeholder="Имя заказчика" name="customer" value={this.state.order.customer} onChange={this.handleChange}/>
+                                </div>
+
+                                <div className="form-group">
+                                    <h5>Номер телефона заказчика:</h5>
+                                    <input type="text" className="form-control" name="customerNumber" value={this.state.order.customerNumber} onChange={this.handleChange}/>
+                                </div>
+
+                                <div className="form-group">
+                                    <h5>Имя получателя:</h5>
+                                    <input type="text" className="form-control" placeholder="Имя получателя" name="receiver" value={this.state.order.receiver} onChange={this.handleChange}/>
+                                </div>
+
+                                <div className="form-group">
+                                    <h5>Номер телефона получателя:</h5>
+                                    <input type="text" className="form-control" name="receiverNumber" value={this.state.order.receiverNumber} onChange={this.handleChange}/>
+                                </div>
+                                
+                                <div className="form-group">
+                                    <h5>Адрес получателя: </h5>
+                                    <DropdownList filter data={['Чапаева', 'Смоленская']} 
+                                    value={this.state.order.address} 
+                                    placeholder={"Улица"}
                                     onChange={ value => {
                                         this.setState({
                                             order: {
                                                 ...this.state.order,
-                                                date: value
+                                                address: value
                                             }
                                         })
                                     } }
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <h5>Время доставки (от/до):</h5>
-                                <div className="form-row">  
-                                    <input type="text" name="timeFrom" className="form-control col-2 ml-5px" value={this.state.order.timeFrom} onChange={this.handleChange}/>
-                                    <input type="text" name="timeTo" className="form-control col-2 ml-5px" value={this.state.order.timeTo} onChange={this.handleChange}/>
+                                    />
+                                    <br/>
+                                    <div className="form-flex-spb ml-5px form-row">
+                                        <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Дом"/>                                 
+                                        <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Подъезд"/>
+                                        <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Этаж"/>                   
+                                        <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Квартира"/>                             
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="form-group">
-                                <h5>Заказ :</h5>
-                                <Multiselect
-
-                                    data={['букет1', 'букет2', 'роза']}
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <h5>Сумма заказа:</h5>
-                                <input type="text" className="form-control" placeholder="Сумма заказа" name="orderPrice" value={this.state.order.cost} onChange={this.handleChange}/>
-                            </div>
-
-                            <div className="form-group">
-                                <h5>Имя заказчика:</h5>
-                                <input type="text" className="form-control" placeholder="Имя заказчика" name="customer" value={this.state.order.customer} onChange={this.handleChange}/>
-                            </div>
-
-                            <div className="form-group">
-                                <h5>Номер телефона заказчика:</h5>
-                                <input type="text" className="form-control" name="customerNumber" value={this.state.order.customerNumber} onChange={this.handleChange}/>
-                            </div>
-
-                            <div className="form-group">
-                                <h5>Имя получателя:</h5>
-                                <input type="text" className="form-control" placeholder="Имя получателя" name="receiver" value={this.state.order.receiver} onChange={this.handleChange}/>
-                            </div>
-
-                            <div className="form-group">
-                                <h5>Номер телефона получателя:</h5>
-                                <input type="text" className="form-control" name="receiverNumber" value={this.state.order.receiverNumber} onChange={this.handleChange}/>
-                            </div>
-                            
-                            <div className="form-group">
-                                <h5>Адрес получателя: </h5>
-                                <DropdownList filter data={['Чапаева', 'Смоленская']} placeholder={"Улица"}/>
-                                <br/>
-                                <div className="form-flex-spb ml-5px form-row">
-                                    <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Дом"/>                                 
-                                    <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Подъезд"/>
-                                    <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Этаж"/>                   
-                                    <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Квартира"/>                             
+                                <div className="form-group">
+                                <h5>Способ оплаты: </h5>
+                                    <DropdownList filter 
+                                    data={['Карта', 'Наличные']}
+                                    value={this.state.order.paymentMethod}
+                                    onChange={ value => {
+                                        this.setState({
+                                            order: {
+                                                ...this.state.order,
+                                                paymentMethod: value
+                                            }
+                                        })
+                                    } }
+                                    />                                
                                 </div>
-                            </div>
 
-                            <div className="form-group">
-                            <h5>Способ оплаты: </h5>
-                                <DropdownList filter data={['Карта', 'Наличные']}/>                                
-                            </div>
+                                <div className="form-group">
+                                    <h5 htmlFor="name">Примечание:</h5>
+                                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="notes"  value={this.state.order.notes} onChange={this.handleChange}></textarea>
+                                </div>
+                                <div className="create-button">
+                                    <button className="btn btn-primary">Создать</button>
+                                </div>
+                            </form>
+                </div>
+                ) : (
+                    <div className="spinner-block">
+                        <div className="spinner-border">
 
-                            <div className="form-group">
-                                <h5 htmlFor="name">Примечание:</h5>
-                                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="note"  value={this.state.order.notes} onChange={this.handleChange}></textarea>
-                            </div>
-                            <div className="create-button">
-                                <button className="btn btn-primary">Создать</button>
-                            </div>
-                        </form>
+                        </div>
+                    </div>
+                )
+            }
             </div>
         )
     }

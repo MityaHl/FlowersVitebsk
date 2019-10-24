@@ -4,6 +4,7 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import {Redirect} from "react-router-dom";
 import axios from 'axios';
 
 class Create extends Component {
@@ -24,15 +25,60 @@ class Create extends Component {
                 paymentMethod: '',
                 notes: ''
             },
+            redirect: false, 
+            types: [], 
+            streets: [],
+            payments: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.saveOrder = this.saveOrder.bind(this);
         //this.datepickersSpellcheck = this.datepickersSpellcheck.bind(this);
         this.localizer = this.localizer.bind(this);
+        this.promiseRequests = this.promiseRequests.bind(this);
+    }
+
+    promiseRequests() {
+        let countQuery = 0;
+        return new Promise( resolve => {
+            axios
+            .get('https://flora-vitebsk.herokuapp.com/getStreets')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        streets: response.data
+                    });
+                    if(countQuery == 3) resolve();
+                });
+            axios
+            .get('https://flora-vitebsk.herokuapp.com/getOrderTypes')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        types: response.data
+                    });
+                    if(countQuery == 3) resolve();
+                });
+            axios
+            .get('https://flora-vitebsk.herokuapp.com/getPaymentMethods')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        payments: response.data
+                    });
+                    if(countQuery == 3) resolve();
+                });
+        })
     }
 
     componentWillMount() {
         this.localizer();
+
+        this.promiseRequests()
+            .then(() => {
+                this.setState({
+                    isResolve: true
+                });
+            })
     }
 
     localizer() {
@@ -53,10 +99,21 @@ class Create extends Component {
     saveOrder(e) {
         e.preventDefault();
         axios
-            .post('https://flora-vitebsk.herokuapp.com/addOrder', this.state.orderData);
+            .post('https://flora-vitebsk.herokuapp.com/addOrder', this.state.orderData)
+            .then(
+                this.setState({
+                    redirect: true
+                })
+            )
+            
     }
 
     render() {
+
+        if (this.state.redirect) {
+            return <Redirect to='/list'/>;
+        }
+
         return(
             <div className="create container">
                 <form onSubmit={this.saveOrder}>
@@ -88,15 +145,15 @@ class Create extends Component {
                             <div className="form-group">
                                 <h5>Заказ :</h5>
                                 <Multiselect
-                                    data={[{id: 1, title:'букет1'}]}
-                                    valueField="id"
-                                    textField="title"
+                                    data={this.state.types}
+                                    valueField="name"
+                                    textField="name"
                                     onChange={value => {
                                         this.setState({
                                             orderData: {
                                                 ...this.state.orderData,
-                                                orderList: value.map(value => value.id).join(',')
-                                            }
+                                                orderList: value.map(value => value).join(' , ')
+                                            } 
                                         });
                                         console.log(this.state.orderData);
                                     }}
@@ -131,10 +188,10 @@ class Create extends Component {
                             <div className="form-group">
                                 <h5>Адрес получателя: </h5>
                                 <DropdownList filter 
-                                    data={[{id: 1, title: 'Чапаева'}]} 
+                                    data={this.state.streets} 
                                     placeholder={"Улица"} 
-                                    valueField="id"
-                                    textField="title"
+                                    valueField="name"
+                                    textField="name"
                                     onChange={value => {
                                         this.setState({
                                             orderData: {
@@ -157,14 +214,14 @@ class Create extends Component {
                             <div className="form-group">
                             <h5>Способ оплаты: </h5>
                             <Multiselect
-                                    data={[{id: 1, title:'Карта'}]}
-                                    valueField="title"
-                                    textField="title"
+                                    data={this.state.payments}
+                                    valueField="name"
+                                    textField="name"
                                     onChange={value => {
                                         this.setState({
                                             orderData: {
                                                 ...this.state.orderData,
-                                                paymentMethod: value.map(value => value.id).join(',')
+                                                paymentMethod: value
                                             }
                                         });
                                         console.log(this.state.orderData);

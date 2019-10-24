@@ -8,19 +8,34 @@ class Prices extends Component {
         super(props);
         this.state = {
             orderTypes: [], 
-            isResolve: false
+            isResolve: false,
+            nameForDelete: ''
         }
 
         this.promiseRequests = this.promiseRequests.bind(this);
         this.showProducts = this.showProducts.bind(this);
+        this.changeReload = this.changeReload.bind(this);
+        this.changeId = this.changeId.bind(this);
     }
 
     showProducts() {
         return(
             this.state.orderTypes.map((orderType, index) => (
-                <OneProduct orderType={orderType}/>
+                <OneProduct orderType={orderType} changeReload={this.changeReload} changeId={this.changeId}/>
             ))
         )
+    }
+
+    changeId(name) {
+        this.setState({
+            nameForDelete: name
+        })
+    }
+
+    changeReload() {
+        this.setState({
+            orderTypes: this.state.orderTypes.filter(orderType => orderType.name !== this.state.nameForDelete)
+        })
     }
 
     promiseRequests() {

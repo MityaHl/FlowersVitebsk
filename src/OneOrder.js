@@ -7,21 +7,31 @@ class OneOrder extends Component{
 
     constructor(props) {
         super(props);
+        this.state ={
+            reload: false
+        }
         this.deleteOrderType = this.deleteOrderType.bind(this);
     }
 
     deleteOrderType(e) {
         e.preventDefault();
+        console.log("click" + this.props.order.id)
         console.log(this.props.order);
         axios
             .post('https://flora-vitebsk.herokuapp.com/deleteOrder' , this.props.order)
+            .then(
+                response => {
+                    this.props.changeId(this.props.order.id);
+                    this.props.changeReload();
+                }
+            )
     }
 
   render() {
     return (
         <tr className="text-center">
             <td>
-                {this.props.order.date}
+                {this.props.order.date.slice(0, 10)}
             </td>
             <td className="text-center">
                 {this.props.order.timeFrom + '-' + this.props.order.timeTo}

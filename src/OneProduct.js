@@ -15,6 +15,12 @@ class OneProduct extends Component {
         console.log(this.props.orderType);
         axios
             .post('https://flora-vitebsk.herokuapp.com/deleteOrderType' , this.props.orderType)
+            .then(
+                response => {
+                    this.props.changeId(this.props.orderType.name);
+                    this.props.changeReload();
+                }
+            )
     }
 
     render() {

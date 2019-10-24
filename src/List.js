@@ -11,15 +11,30 @@ class List extends Component {
             orders: [], 
             isResolve: false,
             findBtn: '',
-            isAuth: false
+            isAuth: false,
+            reload: false,
+            idForDelete: ''
         }
 
         this.promiseRequests = this.promiseRequests.bind(this);
         this.showPosts = this.showPosts.bind(this);
         this.findBtnValue = this.findBtnValue.bind(this);
         this.findByNumber = this.findByNumber.bind(this);
+        this.changeReload = this.changeReload.bind(this);
+        this.changeId = this.changeId.bind(this);
     }
 
+    changeId(id) {
+        this.setState({
+            idForDelete: id
+        })
+    }
+
+    changeReload() {
+        this.setState({
+            orders: this.state.orders.filter(order => order.id !== this.state.idForDelete)
+        })
+    }
 
     promiseRequests() {
         let countQuery = 0;
@@ -67,7 +82,7 @@ class List extends Component {
     showPosts() {
         return(
             this.state.orders.map((order, index) => (
-                <OneOrder order={order}/>
+                <OneOrder order={order} changeReload={this.changeReload} changeId={this.changeId}/>
             ))
         )
     }
@@ -75,10 +90,14 @@ class List extends Component {
 
     render() {
 
-
+        console.log(this.state.orders);
 
         return(
+
             <div>
+                {
+                    this.state.isResolve && this.state.orders instanceof Array ? (
+                        <div>
                 <div className="search container">
                     <div className="row  justify-content-around">
                         <input className="form-control col-9" type="text" onChange={this.findBtnValue} placeholder="Номер телефона заказчика"/>
@@ -136,6 +155,16 @@ class List extends Component {
                     </tbody>
                 </table>
             </div>
+                    ) : (
+                        <div className="spinner-block">
+                            <div className="spinner-border">
+
+                            </div>
+                        </div>
+                    )
+                }
+            </div>
+            
         )
     }
 }
