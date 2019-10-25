@@ -56,7 +56,6 @@ class App extends Component {
                         changeAuth={this.changeAuth}
                         isAuth={this.state.isAuth}
                       />}/>
-                      <Redirect to="/"/>
                   </div>
                   
                   ) : (
@@ -66,7 +65,6 @@ class App extends Component {
                       <Route path={'/pricelist'} component={ Prices }/>
                       <Route path={'/edit/:id'} component={ Edit }/>
                       <Route path={'/list'} component={ List }/>
-                      <Redirect to="/list"/>
                     </div>
                 )
               }                  

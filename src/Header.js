@@ -2,15 +2,17 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import {Redirect} from "react-router-dom";
 
 const cookies = new Cookies();
-
-
 
 class Header extends Component{
 
   constructor(props) {
     super(props);
+    this.state = {
+      redirect: false
+    }
     this.showNothing = this.showNothing.bind(this);
     this.logOut = this.logOut.bind(this);
   }
@@ -21,6 +23,9 @@ class Header extends Component{
       .then(
         response => {
           cookies.remove('Auth-Token');
+          this.setState({
+            redirect: true
+          })
           }
       )
   }
@@ -36,6 +41,9 @@ class Header extends Component{
 }
 
   render() {
+    if(this.state.redirect) {
+      return <Redirect to="/"/>
+    }
     return (
         <div className="header">
           <div className="header-info container">
@@ -46,16 +54,16 @@ class Header extends Component{
               this.props.isAuth ? (
                 <div className="menu">
                 <Link to={'/create'}>
-                    <button className="btn btn-outline-light menu-btn"> Добавить заказ </button>
+                    <button className="btn btn-success menu-btn"> Добавить заказ </button>
                 </Link>
                 <Link to={'/list'}>
-                    <button className="btn btn-outline-light menu-btn"> Список заказов </button>
+                    <button className="btn btn-success menu-btn"> Список заказов </button>
                 </Link>
                 <Link to={'/createproduct'}>
-                    <button className="btn btn-outline-light menu-btn"> Добавить товар </button>
+                    <button className="btn btn-success menu-btn"> Добавить товар </button>
                 </Link>
                 <Link to={'/pricelist'}>
-                    <button className="btn btn-outline-light menu-btn"> Список товаров </button>
+                    <button className="btn btn-success menu-btn"> Список товаров </button>
                 </Link>
                 <button onClick={this.logOut} className="btn btn btn-danger"> Выйти </button>
             </div>
