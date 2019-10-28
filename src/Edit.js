@@ -17,13 +17,27 @@ class Edit extends Component {
             redirect: false,
             types: [], 
             streets: [],
-            payments: []
+            payments: [], 
+            isSelected: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
         this.promiseRequests = this.promiseRequests.bind(this);
         this.localizer = this.localizer.bind(this);
         this.changePoster = this.changePoster.bind(this);
+        this.checkSelected = this.checkSelected.bind(this);
+    }
+
+    checkSelected() {
+        if(this.state.order.poster) {
+            this.setState({
+                isSelected: 'checked'
+            });
+        } else {
+            this.setState({
+                isSelected: ''
+            });
+        }
     }
 
     changePoster() {
@@ -33,6 +47,9 @@ class Edit extends Component {
                 poster: !this.state.order.poster
             }
         });
+        setTimeout(()=>{
+            this.checkSelected();
+        }, 100)  
     }
 
     localizer() {
@@ -84,13 +101,15 @@ class Edit extends Component {
 
     componentWillMount() {
         this.localizer();
-
         this.promiseRequests()
             .then(() => {
                 this.setState({
                     isResolve: true
                 });
             })
+            setTimeout(()=>{
+                this.checkSelected();
+            }, 100)        
     }
 
     saveChanges(e) {
@@ -240,7 +259,7 @@ class Edit extends Component {
 
                                 <div className="form-group">
                                 <h5 htmlFor="name">Постер:</h5>
-                                <input className="form-control ml-5px pl-10px" name="poster" value={this.state.order.poster} type="checkbox" onChange={this.changePoster}/>                                 
+                                <input className="form-control ml-5px pl-10px" checked={this.state.isSelected} name="poster" value={this.state.order.poster} type="checkbox" onChange={this.changePoster}/>                                 
                             </div>
                             <div className="form-group">
                                 <h5 htmlFor="name">Статус заказа:</h5>
@@ -249,7 +268,7 @@ class Edit extends Component {
                                     textField="val"
                                     valueField="className"
                                     onChange={value => {
-                                        this.setState({
+                                        this.setState({ 
                                             order: {
                                                 ...this.state.order,
                                                 status: value.className
