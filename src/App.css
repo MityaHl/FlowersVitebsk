@@ -77,13 +77,21 @@ th {
   margin-bottom: 20px;
 }
 
+.mt-10px {
+  margin-top: 10px!important;
+}
+
+li {
+  font-size: 20px;
+}
+
 th {
   font-size: 15px;
 }
 
 
 td {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .fa-edit {
@@ -117,6 +125,10 @@ td {
   margin-top: 10px;
 }
 
+.ml-0px {
+  margin-left: 0px!important;
+}
+
 .rw-multiselect-tag {
   margin-bottom: calc(2 * (0.279335em));
 }
@@ -126,7 +138,7 @@ td {
 }
 
 .order-done:hover {
-  background-color: #14A31C;
+  background-color: #27FC2F;
 }
 
 .order-ready {
@@ -134,7 +146,7 @@ td {
 }
 
 .order-ready:hover {
-  background-color: #FFE405;
+  background-color: #FCCB27;
 }
 
 .order-accepted:hover {

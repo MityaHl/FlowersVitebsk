@@ -2,23 +2,23 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios';
 import FullOrder from './FullOrder';
-
+import {Redirect} from 'react-router-dom';
 
 class OneOrder extends Component{
 
     constructor(props) {
         super(props);
         this.state ={
-            reload: false
+            reload: false,
+            redirect: false
         }
         this.deleteOrderType = this.deleteOrderType.bind(this);
         this.showOrder = this.showOrder.bind(this);
     }
 
+
     showOrder() {
-        return (
-            <Link to={'/fullPost'}></Link>
-        )
+        this.props.changeRedirect(this.props.order.id);
     }
 
     deleteOrderType(e) {
@@ -38,45 +38,50 @@ class OneOrder extends Component{
     }
 
   render() {
+
     return (
         <tr className="text-center" className={this.props.order.status} >
-            <td>
-                {this.props.order.date.slice(0, 10)}
+            <td onClick={this.showOrder}>
+                {this.props.order.date}
             </td>
-            <td className="text-center">
+            <td className="text-center" onClick={this.showOrder}>
                 {this.props.order.timeFrom + '-' + this.props.order.timeTo}
             </td>
-            <td className="text-center">
+            <td className="text-center" onClick={this.showOrder}>
                 {
                     this.props.order.orderList.map(order => (
-                        order + ' , ' 
+                        order + ' ' 
                     ))
                 }
             </td>
-            <td className="text-center">
+            <td className="text-center" onClick={this.showOrder}>
                 {this.props.order.orderPrice}
             </td>
-            <td className="text-center">
+            <td className="text-center" onClick={this.showOrder}>
                 {this.props.order.customer}
             </td>
-            <td className="text-center">
-                {this.props.order.customerNumber}
+            <td className="text-center" onClick={this.showOrder}>
+                {
+                    this.props.order.customerNumberCode + this.props.order.customerNumber
+                }
             </td>
-            <td className="text-center">
+            <td className="text-center" onClick={this.showOrder}>
                 {this.props.order.receiver}
             </td>
-            <td className="text-center">
-                {this.props.order.receiverNumber}
+            <td className="text-center" onClick={this.showOrder}> 
+                {
+                    this.props.order.receiverNumberCode + this.props.order.receiverNumber
+                }
             </td>
-            <td className="text-center">
+            <td className="text-center" onClick={this.showOrder}>
                 {
                     this.props.order.street + ' , д. ' + this.props.order.house + ' , пд. ' + this.props.order.porch + ' , эт. ' + this.props.order.floor + ' , кв. ' + this.props.order.flat
                 }
             </td>
-            <td className="text-center">
+            <td className="text-center" onClick={this.showOrder}>
                 {this.props.order.paymentMethod}
             </td>
-            <td className="text-center">
+            <td className="text-center" onClick={this.showOrder}>
                 {
                     this.props.order.poster ? (
                         <i class="fa fa-check" aria-hidden="true"></i>
@@ -85,7 +90,7 @@ class OneOrder extends Component{
                     )
                 }
             </td>
-            <td className="text-center">
+            <td className="text-center" onClick={this.showOrder}>
                 {this.props.order.notes}
             </td>
             <td className="text-center">

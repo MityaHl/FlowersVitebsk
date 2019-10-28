@@ -10,6 +10,7 @@ import LogIn from './LogIn';
 import axios from 'axios';
 import Edit from './Edit';
 import Cookies from 'universal-cookie';
+import FullOrder from './FullOrder';
 
 const cookies = new Cookies();
 
@@ -65,7 +66,7 @@ class App extends Component {
                       <Route path={'/pricelist'} component={ Prices }/>
                       <Route path={'/edit/:id'} component={ Edit }/>
                       <Route path={'/list'} component={ List }/>
-                      <Route path={'/fullPost'} component={ List }/>
+                      <Route path={'/fullorder/:id'} component={ FullOrder }/>
                     </div>
                 )
               }                  

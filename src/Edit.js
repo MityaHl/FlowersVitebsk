@@ -12,7 +12,7 @@ class Edit extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            order: '', 
+            order: {}, 
             isResolve: false,
             redirect: false,
             types: [], 
@@ -205,7 +205,23 @@ class Edit extends Component {
 
                                 <div className="form-group">
                                     <h5>Номер телефона заказчика:</h5>
-                                    <input type="text" className="form-control" name="customerNumber" value={this.state.order.customerNumber} onChange={this.handleChange}/>
+                                    <div className="row">
+                                        <DropdownList
+                                            className="col-2 ml-5px pl-10px" 
+                                            data={['+375', '+777']} 
+                                            defaultValue={'+375'}
+                                            placeholder={"Улица"} 
+                                            onChange={value => {
+                                                this.setState({
+                                                    order: {
+                                                        ...this.state.order,
+                                                        customerNumberCode: value
+                                                    }
+                                                });
+                                            }}
+                                        />
+                                    <input type="text" className="form-control col-5 ml-5" name="customerNumber" value={this.state.order.customerNumber} onChange={this.handleChange}/>
+                                    </div>
                                 </div>
 
                                 <div className="form-group">
@@ -215,7 +231,23 @@ class Edit extends Component {
 
                                 <div className="form-group">
                                     <h5>Номер телефона получателя:</h5>
-                                    <input type="text" className="form-control" name="receiverNumber" value={this.state.order.receiverNumber} onChange={this.handleChange}/>
+                                    <div className="row">
+                                        <DropdownList
+                                            className="col-2 ml-5px pl-10px"   
+                                            data={['+375', '+777']} 
+                                            defaultValue={'+375'}
+                                            placeholder={"Улица"} 
+                                            onChange={value => {
+                                                this.setState({
+                                                    order: {
+                                                        ...this.state.order,
+                                                        receiverNumberCode: value
+                                                    }
+                                                });
+                                            }}
+                                        />
+                                        <input type="text" className="form-control col-5 ml-5" name="receiverNumber" value={this.state.order.receiverNumber} onChange={this.handleChange}/>
+                                    </div>
                                 </div>
                                 
                                 <div className="form-group">
@@ -247,13 +279,15 @@ class Edit extends Component {
                                 <div className="form-group">
                                 <h5>Способ оплаты: </h5>
                                     <DropdownList filter 
-                                    data={['Карта', 'Наличные']}
+                                    data={this.state.payments}
                                     value={this.state.order.paymentMethod}
+                                    valueField="name"
+                                    textField="name"
                                     onChange={ value => {
                                         this.setState({
                                             order: {
                                                 ...this.state.order,
-                                                paymentMethod: value
+                                                paymentMethod: value.name
                                             }
                                         })
                                     } }
@@ -267,6 +301,7 @@ class Edit extends Component {
                             <div className="form-group">
                                 <h5 htmlFor="name">Статус заказа:</h5>
                                 <DropdownList
+                                    value={this.state.order.status}
                                     data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
                                     textField="val"
                                     valueField="className"

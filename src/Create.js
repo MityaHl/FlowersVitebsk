@@ -19,6 +19,8 @@ class Create extends Component {
                 orderPrice: '',
                 customer: '',
                 customerNumber: '',
+                customerNumberCode: '+375',
+                receiverNumberCode: '+375',
                 receiver: '',
                 receiverNumber: '',
                 street: '',
@@ -117,6 +119,7 @@ class Create extends Component {
 
     saveOrder(e) {
         e.preventDefault();
+        console.log(this.state.orderData);
         axios
             .post('https://flora-vitebsk.herokuapp.com/addOrder', this.state.orderData)
             .then(
@@ -195,11 +198,21 @@ class Create extends Component {
                             <div className="form-group">
                                 <h5>Номер телефона заказчика:</h5>
                                 <div className="row">
-                                    <select type="twxt" className="form-control col-1  ml-3">
-                                        <option value="" disabled selected>Код</option>
-                                        <option value="customer">+375</option>
-                                        <option value="receiver">+777</option>
-                                    </select>
+                                <DropdownList
+                                    className="col-2 ml-5px pl-10px" 
+                                    data={['+375', '+777']} 
+                                    defaultValue={'+375'}
+                                    placeholder={"Улица"} 
+                                    onChange={value => {
+                                        this.setState({
+                                            orderData: {
+                                                ...this.state.orderData,
+                                                customerNumberCode: value
+                                            }
+                                        });
+                                        console.log(this.state.orderData);
+                                    }}
+                                />
                                     <input type="text" className="form-control col-5 ml-5" name="customerNumber" value={this.state.orderData.customerNumber} onChange={this.handleChange}/>
                                 </div>
                             </div>
@@ -212,11 +225,21 @@ class Create extends Component {
                             <div className="form-group">
                                 <h5>Номер телефона получателя:</h5>
                                 <div className="row">
-                                    <select type="twxt" className="form-control col-1  ml-3">
-                                        <option value="" disabled selected>Код</option>
-                                        <option value="customer">+375</option>
-                                        <option value="receiver">+777</option>
-                                    </select>
+                                <DropdownList
+                                    className="col-2 ml-5px pl-10px"   
+                                    data={['+375', '+777']} 
+                                    defaultValue={'+375'}
+                                    placeholder={"Улица"} 
+                                    onChange={value => {
+                                        this.setState({
+                                            orderData: {
+                                                ...this.state.orderData,
+                                                receiverNumberCode: value
+                                            }
+                                        });
+                                        console.log(this.state.orderData);
+                                    }}
+                                />
                                     <input type="text" className="form-control col-5 ml-5" name="receiverNumber" value={this.state.orderData.receiverNumber} onChange={this.handleChange}/>
                                 </div>
                             </div>

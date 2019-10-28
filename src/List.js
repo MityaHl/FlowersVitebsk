@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import OneOrder from './OneOrder';
 import {Redirect} from "react-router-dom";
+import Multiselect from 'react-widgets/lib/Multiselect';
+import DropdownList from 'react-widgets/lib/DropdownList';
+import Moment from 'moment';
+import momentLocalizer from 'react-widgets-moment';
 
 class List extends Component {
 
@@ -9,12 +13,17 @@ class List extends Component {
         super(props);
         this.state = {
             orders: [], 
+            types: [],
             isResolve: false,
             findBtn: '',
             isAuth: false,
             reload: false,
             idForDelete: '',
-            searchName: ''
+            searchName: '', 
+            findByOrder: [],
+            status: '', 
+            redirect: false, 
+            idForOpen: ''
         }
 
         this.promiseRequests = this.promiseRequests.bind(this);
@@ -28,6 +37,17 @@ class List extends Component {
         this.findByReceiver = this.findByReceiver.bind(this);
         this.findByCustomerNumber = this.findByCustomerNumber.bind(this);
         this.findByReceiverNumber = this.findByReceiverNumber.bind(this);
+        this.findByOrderList = this.findByOrderList.bind(this);
+        this.findByStatus = this.findByStatus.bind(this);
+        this.changeRedirect = this.changeRedirect.bind(this);
+        this.localizer = this.localizer.bind(this);
+    }
+
+    changeRedirect(id) {
+        this.setState({
+            redirect: true,
+            idForDelete: id
+        })
     }
 
     changeId(id) {
@@ -52,9 +72,23 @@ class List extends Component {
                     this.setState({
                         orders: response.data
                     });
-                    if(countQuery == 1) resolve();
+                    if(countQuery == 2) resolve();
+                });
+            axios
+                .get('https://flora-vitebsk.herokuapp.com/getOrderTypes')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        types: response.data
+                    });
+                    if(countQuery == 2) resolve();
                 });
         })
+    }
+
+    localizer() {
+        Moment.locale('ru');
+        momentLocalizer();
     }
     
     findBtnValue(e) {
@@ -65,6 +99,7 @@ class List extends Component {
     }
     
     componentWillMount() {
+        this.localizer();
         this.promiseRequests()
             .then(() => {
                 this.setState({
@@ -76,7 +111,7 @@ class List extends Component {
     showPosts() {
         return(
             this.state.orders.map((order, index) => (
-                <OneOrder order={order} changeReload={this.changeReload} changeId={this.changeId}/>
+                <OneOrder order={order} changeReload={this.changeReload} changeRedirect={this.changeRedirect} changeId={this.changeId}/>
             ))
         )
     }
@@ -118,7 +153,69 @@ class List extends Component {
                         <button type="button" className="btn btn-warning col-2" onClick={this.findByReceiverNumber}>Найти</button>
                     </div>
                 ) 
+            case 'status':
+                return  (
+                    <div className="row  justify-content-around find-input">
+                        <DropdownList
+                            className="col-9 ml-5px pl-10px" 
+                            data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
+                            textField="val"
+                            valueField="className"
+                            onChange={value => {
+                                this.setState({
+                                        status: value.className 
+                                });
+                            } }
+                        />             
+                        <button type="button" className="btn btn-warning col-2" onClick={this.findByStatus}>Найти</button>
+                    </div>
+                ) 
+            case 'orderList':
+                return  (
+                    <div className="row find-input ml-0px">
+                        <Multiselect
+                            className="col-9" 
+                            placeholder={'Заказ'}
+                            data={this.state.types}
+                            valueField="name"
+                            textField="name"
+                            onChange={value => {
+                                this.setState({
+                                    findByOrder: value.map(value => value.name)
+                                });
+                            }}
+                        />
+                        <button type="button" className="btn btn-warning col-2" onClick={this.findByOrderList}>Найти</button>
+                    </div>
+                ) 
         }
+    }
+
+    findByOrderList() {
+        let orderList = {
+            orderList: this.state.findByOrder
+        }
+        axios
+            .post('https://flora-vitebsk.herokuapp.com/findByOrderList', orderList)
+            .then(
+                response => {
+                    this.setState({
+                        orders: response.data
+                    })
+                }
+            )
+    }
+
+    findByStatus() {
+        axios
+            .get('https://flora-vitebsk.herokuapp.com/findByStatus?status=' + this.state.status)
+            .then(
+                response => {
+                    this.setState({
+                        orders: response.data
+                    })
+                }
+            )
     }
 
     findByCustomer() {
@@ -173,6 +270,12 @@ class List extends Component {
 
         console.log(this.state.orders);
 
+        if(this.state.redirect) {
+            return(
+                <Redirect to={'/fullorder/' + this.state.idForDelete}/>
+            )
+        }
+
         return(
 
             <div>
@@ -181,13 +284,19 @@ class List extends Component {
                         <div>
                 <div className="search container">
 
-                    <select className="custom-select my-1 mr-sm-2" onChange={this.selectSearch} name="searchName" placeholder="Тип поиска">
-                        <option value="" disabled selected>Тип поиска</option>
-                        <option value="customer">Имя заказчика</option>
-                        <option value="receiver">Имя получателя</option>
-                        <option value="customerNumber">Телефон заказчика</option>
-                        <option value="receiverNumber">Телефон получателя</option>
-                    </select>
+                        <div className="row">
+                            <select className="custom-select  col-8" onChange={this.selectSearch} name="searchName" placeholder="Тип поиска">
+                                <option value="" disabled selected>Тип поиска</option>
+                                <option value="customer">Имя заказчика</option>
+                                <option value="receiver">Имя получателя</option>
+                                <option value="customerNumber">Телефон заказчика</option>
+                                <option value="receiverNumber">Телефон получателя</option>
+                                <option value="orderList">Заказ</option>
+                                <option value="status">Статус</option>
+                            </select>
+                            <button type="button" className="col-2 offset-1 btn btn-primary   "> Сброс</button>
+                        </div>
+                    
 
                     {
                         this.selectInput()
