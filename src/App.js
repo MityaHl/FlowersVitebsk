@@ -65,6 +65,7 @@ class App extends Component {
                       <Route path={'/pricelist'} component={ Prices }/>
                       <Route path={'/edit/:id'} component={ Edit }/>
                       <Route path={'/list'} component={ List }/>
+                      <Route path={'/fullPost'} component={ List }/>
                     </div>
                 )
               }                  

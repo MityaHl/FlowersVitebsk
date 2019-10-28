@@ -15,15 +15,21 @@ class Create extends Component {
                 date: '',
                 timeFrom: '',
                 timeTo: '',
-                orderList: '',
+                orderList: [],
                 orderPrice: '',
                 customer: '',
                 customerNumber: '',
                 receiver: '',
                 receiverNumber: '',
-                address: '',
+                street: '',
+                house: '',
+                porch: '', 
+                floor: '',
+                flat: '',
                 paymentMethod: '',
-                notes: ''
+                notes: '',
+                status: '',
+                poster: false
             },
             redirect: false, 
             types: [], 
@@ -34,8 +40,21 @@ class Create extends Component {
         this.saveOrder = this.saveOrder.bind(this);
         //this.datepickersSpellcheck = this.datepickersSpellcheck.bind(this);
         this.localizer = this.localizer.bind(this);
+        this.changePoster = this.changePoster.bind(this);
         this.promiseRequests = this.promiseRequests.bind(this);
     }
+
+    changePoster() {
+        this.setState({
+            orderData: {
+                ...this.state.orderData,
+                poster: !this.state.orderData.poster
+            }
+        });
+        console.log(this.state.orderData.poster)
+    }
+
+
 
     promiseRequests() {
         let countQuery = 0;
@@ -101,9 +120,12 @@ class Create extends Component {
         axios
             .post('https://flora-vitebsk.herokuapp.com/addOrder', this.state.orderData)
             .then(
-                this.setState({
-                    redirect: true
-                })
+                setTimeout(()=>{
+                    this.setState({
+                        redirect: true
+                    })
+                }, 1000)
+                
             )
             
     }
@@ -152,7 +174,7 @@ class Create extends Component {
                                         this.setState({
                                             orderData: {
                                                 ...this.state.orderData,
-                                                orderList: value.map(value => value).join(' , ')
+                                                orderList: value.map(value => value.name)
                                             } 
                                         });
                                         console.log(this.state.orderData);
@@ -172,7 +194,14 @@ class Create extends Component {
 
                             <div className="form-group">
                                 <h5>Номер телефона заказчика:</h5>
-                                <input type="text" className="form-control" name="customerNumber" value={this.state.orderData.customerNumber} onChange={this.handleChange}/>
+                                <div className="row">
+                                    <select type="twxt" className="form-control col-1  ml-3">
+                                        <option value="" disabled selected>Код</option>
+                                        <option value="customer">+375</option>
+                                        <option value="receiver">+777</option>
+                                    </select>
+                                    <input type="text" className="form-control col-5 ml-5" name="customerNumber" value={this.state.orderData.customerNumber} onChange={this.handleChange}/>
+                                </div>
                             </div>
 
                             <div className="form-group">
@@ -182,7 +211,14 @@ class Create extends Component {
 
                             <div className="form-group">
                                 <h5>Номер телефона получателя:</h5>
-                                <input type="text" className="form-control" name="receiverNumber" value={this.state.orderData.receiverNumber} onChange={this.handleChange}/>
+                                <div className="row">
+                                    <select type="twxt" className="form-control col-1  ml-3">
+                                        <option value="" disabled selected>Код</option>
+                                        <option value="customer">+375</option>
+                                        <option value="receiver">+777</option>
+                                    </select>
+                                    <input type="text" className="form-control col-5 ml-5" name="receiverNumber" value={this.state.orderData.receiverNumber} onChange={this.handleChange}/>
+                                </div>
                             </div>
                             
                             <div className="form-group">
@@ -196,7 +232,7 @@ class Create extends Component {
                                         this.setState({
                                             orderData: {
                                                 ...this.state.orderData,
-                                                address: value.id
+                                                street: value.name
                                             }
                                         });
                                         console.log(this.state.orderData);
@@ -204,16 +240,16 @@ class Create extends Component {
                                 />
                                 <br/>
                                 <div className="form-flex-spb ml-5px form-row">
-                                    <input className="form-control col-2 ml-5px pl-10px" name="house" type="text" placeholder="Дом" onChange={this.handleChange}/>                                 
-                                    <input className="form-control col-2 ml-5px pl-10px" name="entrance" type="text" placeholder="Подъезд" onChange={this.handleChange}/>
-                                    <input className="form-control col-2 ml-5px pl-10px" name="flour" type="text" placeholder="Этаж" onChange={this.handleChange}/>                   
-                                    <input className="form-control col-2 ml-5px pl-10px" name="flat" type="text" placeholder="Квартира" onChange={this.handleChange}/>                             
+                                    <input className="form-control col-2 ml-5px pl-10px" name="house" value={this.state.orderData.house} type="text" placeholder="Дом" onChange={this.handleChange}/>                                 
+                                    <input className="form-control col-2 ml-5px pl-10px" name="porch" value={this.state.orderData.porch} type="text" placeholder="Подъезд" onChange={this.handleChange}/>
+                                    <input className="form-control col-2 ml-5px pl-10px" name="floor" value={this.state.orderData.floor} type="text" placeholder="Этаж" onChange={this.handleChange}/>                   
+                                    <input className="form-control col-2 ml-5px pl-10px" name="flat" value={this.state.orderData.flat} type="text" placeholder="Квартира" onChange={this.handleChange}/>                             
                                 </div>
                             </div>
 
                             <div className="form-group">
                             <h5>Способ оплаты: </h5>
-                            <Multiselect
+                            <DropdownList
                                     data={this.state.payments}
                                     valueField="name"
                                     textField="name"
@@ -221,14 +257,34 @@ class Create extends Component {
                                         this.setState({
                                             orderData: {
                                                 ...this.state.orderData,
-                                                paymentMethod: value
+                                                paymentMethod: value.name
                                             }
                                         });
                                         console.log(this.state.orderData);
                                     } }
                                 />                                
                             </div>
-
+                            <div className="form-group">
+                                <h5 htmlFor="name">Постер:</h5>
+                                <input className="form-control ml-5px pl-10px" name="poster" value={this.state.orderData.poster} type="checkbox" onChange={this.changePoster}/>                                 
+                            </div>
+                            <div className="form-group">
+                                <h5 htmlFor="name">Статус заказа:</h5>
+                                <DropdownList
+                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
+                                    textField="val"
+                                    valueField="className"
+                                    onChange={value => {
+                                        this.setState({
+                                            orderData: {
+                                                ...this.state.orderData,
+                                                status: value.className
+                                            }
+                                        });
+                                        console.log(this.state.orderData);
+                                    } }
+                                />                                        
+                            </div>
                             <div className="form-group">
                                 <h5 htmlFor="name">Примечание:</h5>
                                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="notes"  value={this.state.orderData.notes} onChange={this.handleChange}></textarea>

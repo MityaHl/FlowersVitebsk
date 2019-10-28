@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Redirect} from "react-router-dom";
 
 class Create extends Component {
     constructor(props) {
@@ -7,7 +8,8 @@ class Create extends Component {
         this.state = {
             productData: {
                 name: ''
-            }
+            }, 
+            redirect: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.saveOrder = this.saveOrder.bind(this);
@@ -27,9 +29,21 @@ class Create extends Component {
         e.preventDefault();
         axios
             .post('https://flora-vitebsk.herokuapp.com/addOrderType', this.state.productData)
+            .then(
+                setTimeout(()=>{
+                    this.setState({
+                        redirect: true
+                    })
+                }, 1000)
+            )
     }
 
     render() {
+
+        if (this.state.redirect) {
+            return <Redirect to='/pricelist'/>;
+        }
+
         return(
             <div className="create container">
                 <form onSubmit={this.saveOrder}>

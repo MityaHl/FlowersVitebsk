@@ -13,14 +13,17 @@ class OneProduct extends Component {
     deleteOrderType(e) {
         e.preventDefault();
         console.log(this.props.orderType);
-        axios
+        let isRemoving =  window.confirm ("Удалить вид заказа?");
+        if(isRemoving) {
+            axios
             .post('https://flora-vitebsk.herokuapp.com/deleteOrderType' , this.props.orderType)
             .then(
                 response => {
-                    this.props.changeId(this.props.orderType.name);
+                    this.props.changeId(this.props.orderType.id);
                     this.props.changeReload();
                 }
             )
+        }
     }
 
     render() {

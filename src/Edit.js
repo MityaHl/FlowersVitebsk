@@ -5,18 +5,34 @@ import Moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
+
 
 class Edit extends Component {
     constructor(props) {
         super(props);
         this.state = {
             order: '', 
-            isResolve: false
+            isResolve: false,
+            redirect: false,
+            types: [], 
+            streets: [],
+            payments: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
         this.promiseRequests = this.promiseRequests.bind(this);
         this.localizer = this.localizer.bind(this);
+        this.changePoster = this.changePoster.bind(this);
+    }
+
+    changePoster() {
+        this.setState({
+            order: {
+                ...this.state.order,
+                poster: !this.state.order.poster
+            }
+        });
     }
 
     localizer() {
@@ -34,7 +50,34 @@ class Edit extends Component {
                     this.setState({
                         order: response.data
                     });
-                    if(countQuery == 1) resolve();
+                    if(countQuery == 4) resolve();
+                });
+            axios
+            .get('https://flora-vitebsk.herokuapp.com/getStreets')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        streets: response.data
+                    });
+                    if(countQuery == 4) resolve();
+                });
+            axios
+            .get('https://flora-vitebsk.herokuapp.com/getOrderTypes')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        types: response.data
+                    });
+                    if(countQuery == 4) resolve();
+                });
+            axios
+            .get('https://flora-vitebsk.herokuapp.com/getPaymentMethods')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        payments: response.data
+                    });
+                    if(countQuery == 4) resolve();
                 });
         })
     }
@@ -54,7 +97,14 @@ class Edit extends Component {
         e.preventDefault();
         console.log(this.state.order);
         axios
-            .post('https://flora-vitebsk.herokuapp.com/changeOrder', this.state.order);
+            .post('https://flora-vitebsk.herokuapp.com/changeOrder', this.state.order)
+            .then(
+                response => {
+                    this.setState({
+                        redirect: true
+                    })
+                }
+            )
     }
 
     handleChange(e){
@@ -68,12 +118,14 @@ class Edit extends Component {
     }
 
     render() {
-        const order = this.state.order;
-        
+        let order = this.state.order;
+        if(this.state.redirect) {
+            return <Redirect to='/list'/>
+        }
         return(
             <div>
                 {
-                order instanceof Object && this.state.isResolve ? (
+                order instanceof Object && this.state.isResolve && this.state.types instanceof Array ? (
                     <div className="create container">
                     <form onSubmit={this.saveChanges}>
                                 
@@ -103,16 +155,22 @@ class Edit extends Component {
 
                                 <div className="form-group">
                                     <h5>Заказ :</h5>
+                                                                        
                                     <Multiselect
+                                        data={this.state.types}
+                                        value={this.state.order.orderList}
+                                        valueField="name"
+                                        textField="name"
                                         onChange={ value => {
                                             this.setState({
                                                 order: {
                                                     ...this.state.order,
-                                                    orderList: value
+                                                    orderList: value.map((item) => {
+                                                        return item.name;
+                                                    })
                                                 }
                                             })
                                         } }
-                                        data={['букет1', 'букет2', 'роза']}
                                     />
                                 </div>
 
@@ -181,11 +239,32 @@ class Edit extends Component {
                                 </div>
 
                                 <div className="form-group">
+                                <h5 htmlFor="name">Постер:</h5>
+                                <input className="form-control ml-5px pl-10px" name="poster" value={this.state.order.poster} type="checkbox" onChange={this.changePoster}/>                                 
+                            </div>
+                            <div className="form-group">
+                                <h5 htmlFor="name">Статус заказа:</h5>
+                                <DropdownList
+                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
+                                    textField="val"
+                                    valueField="className"
+                                    onChange={value => {
+                                        this.setState({
+                                            order: {
+                                                ...this.state.order,
+                                                status: value.className
+                                            }
+                                        });
+                                    } }
+                                />                                        
+                            </div>
+
+                                <div className="form-group">
                                     <h5 htmlFor="name">Примечание:</h5>
                                     <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="notes"  value={this.state.order.notes} onChange={this.handleChange}></textarea>
                                 </div>
                                 <div className="create-button">
-                                    <button className="btn btn-primary">Создать</button>
+                                    <button className="btn btn-primary">Изменить</button>
                                 </div>
                             </form>
                 </div>

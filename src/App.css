@@ -5,9 +5,6 @@
 }
 
 @media (min-width: 300px) and (max-width: 700px) {
-  .header {
-    height: 180px;
-  }
   .menu{
     display: flex;
     flex-wrap: wrap;
@@ -34,9 +31,6 @@
   font-size: 18px;
 }
 
-.menu button:hover {
-  color: #FFC618;
-}
 
 .header-info {
   width: 100%;
@@ -87,12 +81,17 @@ th {
   font-size: 15px;
 }
 
+
 td {
   font-size: 13px;
 }
 
 .fa-edit {
   color: black;
+}
+
+.fa-main {
+  color: white!important;
 }
 
 .rw-btn {
@@ -112,6 +111,34 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.find-input {
+  margin-top: 10px;
+}
+
+.rw-multiselect-tag {
+  margin-bottom: calc(2 * (0.279335em));
+}
+
+.order-done {
+  background-color: #7AFF84;
+}
+
+.order-done:hover {
+  background-color: #14A31C;
+}
+
+.order-ready {
+  background-color: #F8E85D;
+}
+
+.order-ready:hover {
+  background-color: #FFE405;
+}
+
+.order-accepted:hover {
+  background-color: #C2C7C4;
 }
 
 

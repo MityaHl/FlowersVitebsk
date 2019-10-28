@@ -18,7 +18,9 @@ class LogIn extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    
+    componentWillMount() {
+        
+    }
 
     handleSubmit() {
         axios
@@ -49,7 +51,6 @@ class LogIn extends Component {
         if (this.state.redirect) {
             return <Redirect to='/list'/>;
         }
-
         return(
             <div className="container mt-5">
                 <form>

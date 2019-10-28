@@ -26,15 +26,15 @@ class Prices extends Component {
         )
     }
 
-    changeId(name) {
+    changeId(id) {
         this.setState({
-            nameForDelete: name
+            nameForDelete: id
         })
     }
 
     changeReload() {
         this.setState({
-            orderTypes: this.state.orderTypes.filter(orderType => orderType.name !== this.state.nameForDelete)
+            orderTypes: this.state.orderTypes.filter(orderType => orderType.id !== this.state.nameForDelete)
         })
     }
 

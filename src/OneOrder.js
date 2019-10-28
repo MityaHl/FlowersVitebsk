@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import axios from 'axios';
+import FullOrder from './FullOrder';
 
 
 class OneOrder extends Component{
@@ -11,13 +12,21 @@ class OneOrder extends Component{
             reload: false
         }
         this.deleteOrderType = this.deleteOrderType.bind(this);
+        this.showOrder = this.showOrder.bind(this);
+    }
+
+    showOrder() {
+        return (
+            <Link to={'/fullPost'}></Link>
+        )
     }
 
     deleteOrderType(e) {
         e.preventDefault();
-        console.log("click" + this.props.order.id)
         console.log(this.props.order);
-        axios
+        let isRemoving =  window.confirm ("Удалить закзаз?");
+        if(isRemoving) {
+            axios
             .post('https://flora-vitebsk.herokuapp.com/deleteOrder' , this.props.order)
             .then(
                 response => {
@@ -25,11 +34,12 @@ class OneOrder extends Component{
                     this.props.changeReload();
                 }
             )
+        }
     }
 
   render() {
     return (
-        <tr className="text-center">
+        <tr className="text-center" className={this.props.order.status} >
             <td>
                 {this.props.order.date.slice(0, 10)}
             </td>
@@ -37,7 +47,11 @@ class OneOrder extends Component{
                 {this.props.order.timeFrom + '-' + this.props.order.timeTo}
             </td>
             <td className="text-center">
-                {this.props.order.orderList}
+                {
+                    this.props.order.orderList.map(order => (
+                        order + ' , ' 
+                    ))
+                }
             </td>
             <td className="text-center">
                 {this.props.order.orderPrice}
@@ -55,10 +69,21 @@ class OneOrder extends Component{
                 {this.props.order.receiverNumber}
             </td>
             <td className="text-center">
-                {this.props.order.address}
+                {
+                    this.props.order.street + ' , д. ' + this.props.order.house + ' , пд. ' + this.props.order.porch + ' , эт. ' + this.props.order.floor + ' , кв. ' + this.props.order.flat
+                }
             </td>
             <td className="text-center">
                 {this.props.order.paymentMethod}
+            </td>
+            <td className="text-center">
+                {
+                    this.props.order.poster ? (
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    ) : (
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    )
+                }
             </td>
             <td className="text-center">
                 {this.props.order.notes}
