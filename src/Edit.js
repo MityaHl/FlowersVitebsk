@@ -220,24 +220,27 @@ class Edit extends Component {
                                 
                                 <div className="form-group">
                                     <h5>Адрес получателя: </h5>
-                                    <DropdownList filter data={['Чапаева', 'Смоленская']} 
-                                    value={this.state.order.address} 
+                                    <DropdownList filter 
+                                    data={this.state.streets} 
+                                    value={this.state.order.street} 
+                                    valueField="name"
+                                    textField="name"
                                     placeholder={"Улица"}
                                     onChange={ value => {
                                         this.setState({
                                             order: {
                                                 ...this.state.order,
-                                                address: value
+                                                street: value
                                             }
                                         })
                                     } }
                                     />
                                     <br/>
                                     <div className="form-flex-spb ml-5px form-row">
-                                        <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Дом"/>                                 
-                                        <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Подъезд"/>
-                                        <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Этаж"/>                   
-                                        <input className="form-control col-2 ml-5px pl-10px" name="title" type="text" placeholder="Квартира"/>                             
+                                        <input className="form-control col-2 ml-5px pl-10px" name="house" value={this.state.order.house} type="text" placeholder="Дом" onChange={this.handleChange}/>                                 
+                                        <input className="form-control col-2 ml-5px pl-10px" name="porch" value={this.state.order.porch}  type="text" placeholder="Подъезд" onChange={this.handleChange}/>
+                                        <input className="form-control col-2 ml-5px pl-10px" name="floor" value={this.state.order.floor} type="text" placeholder="Этаж" onChange={this.handleChange}/>                   
+                                        <input className="form-control col-2 ml-5px pl-10px" name="flat" value={this.state.order.flat} type="text" placeholder="Квартира" onChange={this.handleChange}/>                             
                                     </div>
                                 </div>
 
