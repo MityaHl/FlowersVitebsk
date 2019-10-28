@@ -56,7 +56,7 @@ class LogIn extends Component {
                 <form>
                     <div className="form-group">
                         <label>Логин</label>
-                        <input type="text" className="form-control" name="login" placeholder="Enter email" onChange={this.handleChange}/>
+                        <input type="text" className="form-control" name="login" placeholder="login" onChange={this.handleChange}/>
                     </div>
                     <div className="form-group">
                         <label >Пароль</label>
