@@ -11,6 +11,7 @@ class LogIn extends Component {
                 login: '',
                 password: ''
             }, 
+            isRight: true,
             token: '',
             redirect: false
         }
@@ -35,6 +36,12 @@ class LogIn extends Component {
                     document.cookie = "Auth-Token=" + this.state.token;
                 }             
             )
+            .catch( error => {
+                this.setState({
+                    isRight: false
+                })
+                console.log(this.state.isRight);
+            } )
     }
 
     handleChange(e){
@@ -61,9 +68,13 @@ class LogIn extends Component {
                     <div className="form-group">
                         <label >Пароль</label>
                         <input type="password" className="form-control" name="password" placeholder="Password" onChange={this.handleChange}/>
-                    </div>
-                    <div class="invalid-feedback">
-                        Please provide a valid city.
+                        {
+                            !this.state.isRight ? (
+                                <div className="invalid-data mt-2">
+                                    Проверьте логин или пароль
+                                </div>
+                            ) : ('')
+                        }
                     </div>
                     <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Войти</button>
                 </form>

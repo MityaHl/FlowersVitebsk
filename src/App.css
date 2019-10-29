@@ -19,6 +19,10 @@
   margin-top: 20px;
 }
 
+.invalid-data {
+  color: red;
+}
+
 .menu {
   display: flex;
   float: right;
