@@ -153,19 +153,19 @@ td {
 }
 
 .order-done {
-  background-color: #98FF98;
+  background-color: #D6FFDD;
 }
 
 .order-done:hover {
-  background-color: #7AFF84;
+  background-color: #9BFF99;
 }
 
 .order-ready {
-  background-color: #F8E85D;
+  background-color: #F9FFAD;
 }
 
 .order-ready:hover {
-  background-color: #FCCB27;
+  background-color: #F8E85D;
 }
 
 .order-accepted:hover {
