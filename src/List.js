@@ -126,38 +126,38 @@ class List extends Component {
         switch (this.state.searchName) {
             case 'customer':
                 return  (
-                    <div className="row  justify-content-around find-input">
-                        <input className="form-control col-9" type="text" onChange={this.findBtnValue} placeholder="Заказчик"/>
-                        <button type="button" className="btn btn-warning col-2" onClick={this.findByCustomer}>Найти</button>
+                    <div className="row find-input">
+                        <input className="form-control col-5" type="text" onChange={this.findBtnValue} placeholder="Заказчик"/>
+                        <button type="button" className="btn btn-warning col-2 ml-5px" onClick={this.findByCustomer}>Найти</button>
                     </div>
                 )
                 
             case 'receiver':
                 return  (
-                    <div className="row  justify-content-around find-input">
-                        <input className="form-control col-9" type="text" onChange={this.findBtnValue} placeholder="Получатель"/>
-                        <button type="button" className="btn btn-warning col-2" onClick={this.findByReceiver}>Найти</button>
+                    <div className="row find-input">
+                        <input className="form-control col-5" type="text" onChange={this.findBtnValue} placeholder="Получатель"/>
+                        <button type="button" className="btn btn-warning col-2 ml-5px" onClick={this.findByReceiver}>Найти</button>
                     </div>
                 )
             case 'customerNumber':
                 return  (
-                    <div className="row  justify-content-around find-input">
-                        <input className="form-control col-9" type="text" onChange={this.findBtnValue} placeholder="Номер телефона заказчика"/>
-                        <button type="button" className="btn btn-warning col-2" onClick={this.findByCustomerNumber}>Найти</button>
+                    <div className="row find-input">
+                        <input className="form-control col-5" type="text" onChange={this.findBtnValue} placeholder="Номер телефона заказчика"/>
+                        <button type="button" className="btn btn-warning col-2 ml-5px" onClick={this.findByCustomerNumber}>Найти</button>
                     </div>
                 )
             case 'receiverNumber':
                 return  (
-                    <div className="row  justify-content-around find-input">
-                        <input className="form-control col-9" type="text" onChange={this.findBtnValue} placeholder="Номер телефона получателя"/>
-                        <button type="button" className="btn btn-warning col-2" onClick={this.findByReceiverNumber}>Найти</button>
+                    <div className="row find-input">
+                        <input className="form-control col-5" type="text" onChange={this.findBtnValue} placeholder="Номер телефона получателя"/>
+                        <button type="button" className="btn btn-warning col-2 ml-5px" onClick={this.findByReceiverNumber}>Найти</button>
                     </div>
                 ) 
             case 'status':
                 return  (
-                    <div className="row  justify-content-around find-input">
+                    <div className="row find-input">
                         <DropdownList
-                            className="col-9 ml-5px pl-10px" 
+                            className="col-5 pl-0px" 
                             data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
                             textField="val"
                             valueField="className"
@@ -172,9 +172,9 @@ class List extends Component {
                 ) 
             case 'orderList':
                 return  (
-                    <div className="row find-input ml-0px">
+                    <div className="row find-input">
                         <Multiselect
-                            className="col-9" 
+                            className="col-5 pl-0px" 
                             placeholder={'Заказ'}
                             data={this.state.types}
                             valueField="name"
