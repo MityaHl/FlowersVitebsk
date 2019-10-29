@@ -3,7 +3,7 @@ import DropdownList from 'react-widgets/lib/DropdownList';
 import Multiselect from 'react-widgets/lib/Multiselect';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
-import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import DatePicker from 'react-datepicker/dist/react-datepicker';
 import {Redirect} from "react-router-dom";
 import axios from 'axios';
 
@@ -145,18 +145,7 @@ class Create extends Component {
                             
                             <div className="form-group">
                                 <h5>Дата доставки:</h5>
-                                <DateTimePicker
-                                    time={false}
-                                    onChange={ value => {
-                                        this.setState({
-                                            orderData: {
-                                                ...this.state.orderData,
-                                                date: value
-                                            }
-                                        })
-                                        console.log(this.state.orderData);
-                                    } }
-                                />
+                                <input type='date' class="form-control" name="date" value={this.state.orderData.date} onChange={this.handleChange}></input>
                             </div>
 
                             <div className="form-group">

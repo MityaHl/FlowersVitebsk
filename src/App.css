@@ -31,6 +31,12 @@
   font-size: 18px;
 }
 
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+    display: block;
+    width: 100%;
+}
 
 .header-info {
   width: 100%;
@@ -60,6 +66,7 @@ th {
 
 .pl-0px {
   padding-left: 0px!important;
+  padding-right: 0px !important;
 }
 
 .content-center p {

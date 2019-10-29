@@ -41,6 +41,7 @@ class List extends Component {
         this.findByStatus = this.findByStatus.bind(this);
         this.changeRedirect = this.changeRedirect.bind(this);
         this.localizer = this.localizer.bind(this);
+        this.resetSearch = this.resetSearch.bind(this);
     }
 
     changeRedirect(id) {
@@ -86,6 +87,16 @@ class List extends Component {
         })
     }
 
+    resetSearch() {
+        axios
+            .get('https://flora-vitebsk.herokuapp.com/getOrders')
+            .then(response => {
+                this.setState({
+                    orders: response.data
+                });
+            });
+    }
+
     localizer() {
         Moment.locale('ru');
         momentLocalizer();
@@ -127,37 +138,37 @@ class List extends Component {
             case 'customer':
                 return  (
                     <div className="row find-input">
-                        <input className="form-control col-5" type="text" onChange={this.findBtnValue} placeholder="Заказчик"/>
-                        <button type="button" className="btn btn-warning col-2 ml-5px" onClick={this.findByCustomer}>Найти</button>
+                        <input className="form-control col-8" type="text" onChange={this.findBtnValue} placeholder="Заказчик"/>
+                        <button type="button" className="btn btn-warning col-2 offset-1 ml-5px" onClick={this.findByCustomer}>Найти</button>
                     </div>
                 )
                 
             case 'receiver':
                 return  (
                     <div className="row find-input">
-                        <input className="form-control col-5" type="text" onChange={this.findBtnValue} placeholder="Получатель"/>
-                        <button type="button" className="btn btn-warning col-2 ml-5px" onClick={this.findByReceiver}>Найти</button>
+                        <input className="form-control col-8" type="text" onChange={this.findBtnValue} placeholder="Получатель"/>
+                        <button type="button" className="btn btn-warning col-2 offset-1 ml-5px" onClick={this.findByReceiver}>Найти</button>
                     </div>
                 )
             case 'customerNumber':
                 return  (
                     <div className="row find-input">
                         <input className="form-control col-5" type="text" onChange={this.findBtnValue} placeholder="Номер телефона заказчика"/>
-                        <button type="button" className="btn btn-warning col-2 ml-5px" onClick={this.findByCustomerNumber}>Найти</button>
+                        <button type="button" className="btn btn-warning col-2 offset-1 ml-5px" onClick={this.findByCustomerNumber}>Найти</button>
                     </div>
                 )
             case 'receiverNumber':
                 return  (
                     <div className="row find-input">
                         <input className="form-control col-5" type="text" onChange={this.findBtnValue} placeholder="Номер телефона получателя"/>
-                        <button type="button" className="btn btn-warning col-2 ml-5px" onClick={this.findByReceiverNumber}>Найти</button>
+                        <button type="button" className="btn btn-warning col-2 offset-1 ml-5px" onClick={this.findByReceiverNumber}>Найти</button>
                     </div>
                 ) 
             case 'status':
                 return  (
                     <div className="row find-input">
                         <DropdownList
-                            className="col-5 pl-0px" 
+                            className="col-8 pl-0px" 
                             data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
                             textField="val"
                             valueField="className"
@@ -167,14 +178,14 @@ class List extends Component {
                                 });
                             } }
                         />             
-                        <button type="button" className="btn btn-warning col-2" onClick={this.findByStatus}>Найти</button>
+                        <button type="button" className="btn btn-warning col-2 offset-1" onClick={this.findByStatus}>Найти</button>
                     </div>
                 ) 
             case 'orderList':
                 return  (
                     <div className="row find-input">
                         <Multiselect
-                            className="col-5 pl-0px" 
+                            className="col-8 pl-0px" 
                             placeholder={'Заказ'}
                             data={this.state.types}
                             valueField="name"
@@ -185,7 +196,7 @@ class List extends Component {
                                 });
                             }}
                         />
-                        <button type="button" className="btn btn-warning col-2" onClick={this.findByOrderList}>Найти</button>
+                        <button type="button" className="btn btn-warning col-2 offset-1" onClick={this.findByOrderList}>Найти</button>
                     </div>
                 ) 
         }
@@ -294,7 +305,7 @@ class List extends Component {
                                 <option value="orderList">Заказ</option>
                                 <option value="status">Статус</option>
                             </select>
-                            <button type="button" className="col-2 offset-1 btn btn-primary   "> Сброс</button>
+                            <button type="button" className="col-2 offset-1 btn btn-primary" onClick={this.resetSearch}> Сброс</button>
                         </div>
                     
 

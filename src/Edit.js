@@ -150,18 +150,7 @@ class Edit extends Component {
                                 
                                 <div className="form-group">    
                                     <h5>Дата доставки:</h5>
-                                    <DateTimePicker
-                                        time={false}
-                                        value={new Date(this.state.order.date)}
-                                        onChange={ value => {
-                                            this.setState({
-                                                order: {
-                                                    ...this.state.order,
-                                                    date: value
-                                                }
-                                            })
-                                        } }
-                                    />
+                                    <input type='date' class="form-control" name="date" value={this.state.order.date} onChange={this.handleChange}></input>
                                 </div>
 
                                 <div className="form-group">
