@@ -31,7 +31,8 @@ class Create extends Component {
                 paymentMethod: '',
                 notes: '',
                 status: '',
-                poster: false
+                poster: false, 
+                codes: []
             },
             redirect: false, 
             types: [], 
@@ -68,7 +69,7 @@ class Create extends Component {
                     this.setState({
                         streets: response.data
                     });
-                    if(countQuery == 3) resolve();
+                    if(countQuery == 4) resolve();
                 });
             axios
             .get('https://flora-vitebsk.herokuapp.com/getOrderTypes')
@@ -77,7 +78,7 @@ class Create extends Component {
                     this.setState({
                         types: response.data
                     });
-                    if(countQuery == 3) resolve();
+                    if(countQuery == 4) resolve();
                 });
             axios
             .get('https://flora-vitebsk.herokuapp.com/getPaymentMethods')
@@ -86,7 +87,16 @@ class Create extends Component {
                     this.setState({
                         payments: response.data
                     });
-                    if(countQuery == 3) resolve();
+                    if(countQuery == 4) resolve();
+                });
+            axios
+            .get('https://flora-vitebsk.herokuapp.com/getNumberCodes')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        codes: response.data
+                    });
+                    if(countQuery == 4) resolve();
                 });
         })
     }
@@ -169,7 +179,6 @@ class Create extends Component {
                                                 orderList: value.map(value => value.name)
                                             } 
                                         });
-                                        console.log(this.state.orderData);
                                     }}
                                 />
                             </div>
@@ -187,16 +196,18 @@ class Create extends Component {
                             <div className="form-group">
                                 <h5>Номер телефона заказчика:</h5>
                                 <div className="row">
-                                <DropdownList
+                                <DropdownList filter
                                     className="col-2 ml-5px pl-10px" 
-                                    data={['+375', '+777']} 
+                                    data={this.state.codes} 
                                     defaultValue={'+375'}
                                     placeholder={"Улица"} 
+                                    valueField="name"
+                                    textField="name"
                                     onChange={value => {
                                         this.setState({
                                             orderData: {
                                                 ...this.state.orderData,
-                                                customerNumberCode: value
+                                                customerNumberCode: value.name
                                             }
                                         });
                                         console.log(this.state.orderData);
@@ -214,16 +225,18 @@ class Create extends Component {
                             <div className="form-group">
                                 <h5>Номер телефона получателя:</h5>
                                 <div className="row">
-                                <DropdownList
+                                <DropdownList filter
                                     className="col-2 ml-5px pl-10px"   
-                                    data={['+375', '+777']} 
+                                    data={this.state.codes} 
                                     defaultValue={'+375'}
                                     placeholder={"Улица"} 
+                                    valueField="name"
+                                    textField="name"
                                     onChange={value => {
                                         this.setState({
                                             orderData: {
                                                 ...this.state.orderData,
-                                                receiverNumberCode: value
+                                                receiverNumberCode: value.name
                                             }
                                         });
                                         console.log(this.state.orderData);
@@ -283,6 +296,7 @@ class Create extends Component {
                             <div className="form-group">
                                 <h5 htmlFor="name">Статус заказа:</h5>
                                 <DropdownList
+                                    defaultValue={{val: 'Принят', className: 'order-accepted'}}
                                     data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
                                     textField="val"
                                     valueField="className"

@@ -62,7 +62,8 @@ class OneOrder extends Component{
             </td>
             <td className="text-center" onClick={this.showOrder}>
                 {
-                    this.props.order.customerNumberCode + this.props.order.customerNumber
+                    this.props.order.customerNumber ? (this.props.order.customerNumberCode + this.props.order.customerNumber) : ('')
+                    
                 }
             </td>
             <td className="text-center" onClick={this.showOrder}>
@@ -70,7 +71,7 @@ class OneOrder extends Component{
             </td>
             <td className="text-center" onClick={this.showOrder}> 
                 {
-                    this.props.order.receiverNumberCode + this.props.order.receiverNumber
+                    this.props.order.receiverNumberCode ? (this.props.order.receiverNumberCode + this.props.order.receiverNumber) : ('')
                 }
             </td>
             <td className="text-center" onClick={this.showOrder}>

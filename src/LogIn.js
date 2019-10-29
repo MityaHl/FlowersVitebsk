@@ -62,6 +62,9 @@ class LogIn extends Component {
                         <label >Пароль</label>
                         <input type="password" className="form-control" name="password" placeholder="Password" onChange={this.handleChange}/>
                     </div>
+                    <div class="invalid-feedback">
+                        Please provide a valid city.
+                    </div>
                     <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Войти</button>
                 </form>
             </div>
