@@ -35,6 +35,10 @@
   font-size: 18px;
 }
 
+.date-tr {
+  width: 110px;
+}
+
 .react-datepicker-wrapper,
 .react-datepicker__input-container,
 .react-datepicker__input-container input {
@@ -149,11 +153,11 @@ td {
 }
 
 .order-done {
-  background-color: #7AFF84;
+  background-color: #98FF98;
 }
 
 .order-done:hover {
-  background-color: #27FC2F;
+  background-color: #7AFF84;
 }
 
 .order-ready {

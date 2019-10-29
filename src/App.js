@@ -44,11 +44,13 @@ class App extends Component {
     }
 
     render() {
-      console.log(this.state.isAuth);
+
+
+
       return (
         <div className="App">
           <BrowserRouter>
-          <Header isAuth={this.state.isAuth}/> 
+          <Header isAuth={this.state.isAuth} changeAuth={this.changeAuth} changeLogOut={this.changeLogOut}/> 
             <Switch>
               {
                 !this.state.isAuth ? (
@@ -61,7 +63,7 @@ class App extends Component {
                   
                   ) : (
                     <div>
-                      <Route path={'/create'} component={ Create }/>
+                      <Route path={'/create'} exact render={() => <Create/>}/>
                       <Route path={'/createproduct'} component={ CreateProduct }/>
                       <Route path={'/pricelist'} component={ Prices }/>
                       <Route path={'/edit/:id'} component={ Edit }/>

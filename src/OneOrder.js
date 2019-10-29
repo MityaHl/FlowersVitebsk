@@ -39,10 +39,16 @@ class OneOrder extends Component{
 
   render() {
 
+    let street = this.props.order.street ? (this.props.order.street) : ('')
+    let house = this.props.order.house ? ( '   д. ' + this.props.order.house) : ('')
+    let porch = this.props.order.porch ? ( '   пд. ' + this.props.order.porch) : ('')
+    let floor = this.props.order.floor ? ( '   эт. ' + this.props.order.floor) : ('')
+    let flat = this.props.order.flat ? ( '   кв. ' + this.props.order.flat) : ('')
+
     return (
         <tr className="text-center" className={this.props.order.status} >
-            <td onClick={this.showOrder}>
-                {this.props.order.date}
+            <td className="date-tr" onClick={this.showOrder}>
+                {this.props.order.date.split('-').reverse().join('-')}
             </td>
             <td className="text-center" onClick={this.showOrder}>
                 {this.props.order.timeFrom + '-' + this.props.order.timeTo}
@@ -76,7 +82,7 @@ class OneOrder extends Component{
             </td>
             <td className="text-center" onClick={this.showOrder}>
                 {
-                    this.props.order.street + ' , д. ' + this.props.order.house + ' , пд. ' + this.props.order.porch + ' , эт. ' + this.props.order.floor + ' , кв. ' + this.props.order.flat
+                    street + house + porch + floor + flat
                 }
             </td>
             <td className="text-center" onClick={this.showOrder}>

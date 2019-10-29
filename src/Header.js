@@ -23,9 +23,10 @@ class Header extends Component{
       .then(
         response => {
           cookies.remove('Auth-Token');
-          this.setState({
-            redirect: true
-          })
+          setTimeout(()=>{
+            this.props.changeAuth();
+              
+          }, 500)
           }
       )
   }
@@ -41,9 +42,6 @@ class Header extends Component{
 }
 
   render() {
-    if(this.state.redirect) {
-      return <Redirect to="/"/>
-    }
     return (
         <div className="header">
           <div className="header-info container">
@@ -65,7 +63,9 @@ class Header extends Component{
                 <Link to={'/pricelist'}>
                     <button className="btn btn-success menu-btn"> Список товаров </button>
                 </Link>
-                <button onClick={this.logOut} className="btn btn btn-danger"> Выйти </button>
+                <Link to={'/'}>
+                    <button className="btn btn-danger menu-btn log-out-btn" onClick={this.logOut}> Выйти </button>
+                </Link>
             </div>
               ) : (
                 <div></div>

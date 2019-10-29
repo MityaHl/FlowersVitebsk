@@ -23,6 +23,7 @@ class List extends Component {
             findByOrder: [],
             status: '', 
             redirect: false, 
+            logOut: false, 
             idForOpen: ''
         }
 
@@ -42,6 +43,13 @@ class List extends Component {
         this.changeRedirect = this.changeRedirect.bind(this);
         this.localizer = this.localizer.bind(this);
         this.resetSearch = this.resetSearch.bind(this);
+        this.changeLogOut = this.changeLogOut.bind(this);
+    }
+
+    changeLogOut() {
+        this.setState({
+            logOut: !this.state.logOut
+        })
     }
 
     changeRedirect(id) {
