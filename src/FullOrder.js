@@ -45,7 +45,7 @@ class FullOrder extends Component {
             <ul class="list-group">
                 <li class="list-group-item mt-10px">{'Дата: ' + this.state.order.date.slice(0,10)}</li>
                 <li class="list-group-item mt-10px">{'Время: ' + this.state.order.timeFrom + ' - ' + this.state.order.timeTo}</li>
-                <li class="list-group-item mt-10px">{'Заказ: ' + this.state.order.orderList.map(order => (' ' + order))}</li>
+                <li class="list-group-item mt-10px">{'Заказ: ' + this.state.order.orderList}</li>
                 <li class="list-group-item mt-10px">{'Сумма заказа: ' + this.state.order.orderPrice}</li>
                 <li class="list-group-item mt-10px">{'Заказчик: ' + this.state.order.customer}</li>
                 <li class="list-group-item mt-10px">{'Телефон заказчика: ' + this.state.order.customerNumberCode + this.state.order.customerNumber}</li>
@@ -54,6 +54,7 @@ class FullOrder extends Component {
                 <li class="list-group-item mt-10px">{'Адрес получателя: ' + this.state.order.street + ' , дом ' + this.state.order.house + ' , подъезд ' + this.state.order.porch + ' , этаж ' + this.state.order.floor + ' , квартира ' + this.state.order.flat}</li>
                 <li class="list-group-item mt-10px">{'Тип оплаты: ' + this.state.order.paymentMethod}</li>
                 <li class="list-group-item mt-10px">{this.state.order.poster ? ('Постер: Да') : ('Постер: Нет')}</li>
+                <li class="list-group-item mt-10px">{this.state.order.payStatus ? ('Оплата: Да') : ('Оплата: Нет')}</li>
                 <li class="list-group-item mt-10px">{this.state.order.status !='order-done' ? (
                     this.state.order.status == 'order-ready' ? ('Статус: готов') : ('Статус: принят')
                 ) : ('Статус: доставлен')}</li>

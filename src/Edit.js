@@ -18,7 +18,8 @@ class Edit extends Component {
             types: [], 
             streets: [],
             payments: [], 
-            isSelected: ''
+            isSelected: '',
+            isSelectedStatus: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
@@ -26,6 +27,20 @@ class Edit extends Component {
         this.localizer = this.localizer.bind(this);
         this.changePoster = this.changePoster.bind(this);
         this.checkSelected = this.checkSelected.bind(this);
+        this.checkSelectedStatus = this.checkSelectedStatus.bind(this);
+        this.changePayStatus = this.changePayStatus.bind(this);
+    }
+
+    checkSelectedStatus() {
+        if(this.state.order.payStatus) {
+            this.setState({
+                isSelectedStatus: 'checked'
+            });
+        } else {
+            this.setState({
+                isSelectedStatus: ''
+            });
+        }
     }
 
     checkSelected() {
@@ -49,6 +64,18 @@ class Edit extends Component {
         });
         setTimeout(()=>{
             this.checkSelected();
+        }, 100)  
+    }
+
+    changePayStatus() {
+        this.setState({
+            order: {
+                ...this.state.order,
+                payStatus: !this.state.order.payStatus
+            }
+        });
+        setTimeout(()=>{
+            this.checkSelectedStatus();
         }, 100)  
     }
 
@@ -110,6 +137,9 @@ class Edit extends Component {
             setTimeout(()=>{
                 this.checkSelected();
             }, 100)        
+            setTimeout(()=>{
+                this.checkSelectedStatus();
+            }, 100)     
     }
 
     saveChanges(e) {
@@ -162,24 +192,8 @@ class Edit extends Component {
                                 </div>
 
                                 <div className="form-group">
-                                    <h5>Заказ :</h5>
-                                                                        
-                                    <Multiselect
-                                        data={this.state.types}
-                                        value={this.state.order.orderList}
-                                        valueField="name"
-                                        textField="name"
-                                        onChange={ value => {
-                                            this.setState({
-                                                order: {
-                                                    ...this.state.order,
-                                                    orderList: value.map((item) => {
-                                                        return item.name;
-                                                    })
-                                                }
-                                            })
-                                        } }
-                                    />
+                                    <h5>Заказ :</h5>                          
+                                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="orderList"  value={this.state.order.orderList} onChange={this.handleChange}></textarea>
                                 </div>
 
                                 <div className="form-group">
@@ -242,19 +256,19 @@ class Edit extends Component {
                                 <div className="form-group">
                                     <h5>Адрес получателя: </h5>
                                     <DropdownList filter 
-                                    data={this.state.streets} 
-                                    value={this.state.order.street} 
-                                    valueField="name"
-                                    textField="name"
-                                    placeholder={"Улица"}
-                                    onChange={ value => {
-                                        this.setState({
-                                            order: {
-                                                ...this.state.order,
-                                                street: value
-                                            }
-                                        })
-                                    } }
+                                        data={this.state.streets} 
+                                        value={this.state.order.street} 
+                                        valueField="name"
+                                        textField="name"
+                                        placeholder={"Улица"}
+                                        onChange={ value => {
+                                            this.setState({
+                                                order: {
+                                                    ...this.state.order,
+                                                    street: value.name
+                                                }
+                                            })
+                                        } }
                                     />
                                     <br/>
                                     <div className="form-flex-spb ml-5px form-row">
@@ -284,9 +298,15 @@ class Edit extends Component {
                                 </div>
 
                                 <div className="form-group">
-                                <h5 htmlFor="name">Постер:</h5>
-                                <input className="form-control ml-5px pl-10px" checked={this.state.isSelected} name="poster" value={this.state.order.poster} type="checkbox" onChange={this.changePoster}/>                                 
-                            </div>
+                                    <h5 htmlFor="name">Статус оплаты:</h5>
+                                    <input className="form-control ml-5px pl-10px" checked={this.state.isSelectedStatus} name="payStatus" value={this.state.order.payStatus} type="checkbox" onChange={this.changePayStatus}/>                                 
+                                </div>
+
+                                <div className="form-group">
+                                    <h5 htmlFor="name">Постер:</h5>
+                                    <input className="form-control ml-5px pl-10px" checked={this.state.isSelected} name="poster" value={this.state.order.poster} type="checkbox" onChange={this.changePoster}/>                                 
+                                </div>  
+
                             <div className="form-group">
                                 <h5 htmlFor="name">Статус заказа:</h5>
                                 <DropdownList

@@ -48,15 +48,15 @@ class Create extends Component {
             <div className="create container">
                 <form onSubmit={this.saveOrder}>
                             
-                            <div className="form-group">
-                                <h5>Название продукта:</h5>
-                                <input type="text" className="form-control" name="name" placeholder="Название продукта" value={this.state.productData.name} onChange={this.handleChange}/>
-                            </div>
+                    <div className="form-group">
+                        <h5>Название продукта:</h5>
+                        <input type="text" className="form-control" name="name" placeholder="Название продукта" value={this.state.productData.name} onChange={this.handleChange}/>
+                    </div>
 
-                            <div className="create-button">
-                                <button className="btn btn-primary">Добавить товар</button>
-                            </div>
-                        </form>
+                    <div className="create-button">
+                        <button className="btn btn-primary">Добавить товар</button>
+                    </div>
+                </form>
             </div>
         )
     }

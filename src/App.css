@@ -152,8 +152,25 @@ td {
   margin-bottom: calc(2 * (0.279335em));
 }
 
+.status-green {
+  background-color: green;
+
+}
+
+.status-red {
+  background-color: red;
+}
+
+.get-file {
+  margin-top: 20px;
+}
+
 .order-done {
   background-color: #D6FFDD;
+}
+
+.red-letters {
+  color: red;
 }
 
 .order-done:hover {

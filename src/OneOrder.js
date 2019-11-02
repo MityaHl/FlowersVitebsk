@@ -55,9 +55,7 @@ class OneOrder extends Component{
             </td>
             <td className="text-center" onClick={this.showOrder}>
                 {
-                    this.props.order.orderList.map(order => (
-                        order + ' ' 
-                    ))
+                    this.props.order.orderList
                 }
             </td>
             <td className="text-center" onClick={this.showOrder}>
@@ -77,7 +75,7 @@ class OneOrder extends Component{
             </td>
             <td className="text-center" onClick={this.showOrder}> 
                 {
-                    this.props.order.receiverNumberCode ? (this.props.order.receiverNumberCode + this.props.order.receiverNumber) : ('')
+                    this.props.order.receiverNumber ? (this.props.order.receiverNumberCode + this.props.order.receiverNumber) : ('')
                 }
             </td>
             <td className="text-center" onClick={this.showOrder}>
@@ -91,6 +89,15 @@ class OneOrder extends Component{
             <td className="text-center" onClick={this.showOrder}>
                 {
                     this.props.order.poster ? (
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    ) : (
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    )
+                }
+            </td>
+            <td className="text-center">
+                {
+                    this.props.order.payStatus ? (
                         <i class="fa fa-check" aria-hidden="true"></i>
                     ) : (
                         <i class="fa fa-times" aria-hidden="true"></i>

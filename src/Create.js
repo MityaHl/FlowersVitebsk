@@ -15,7 +15,7 @@ class Create extends Component {
                 date: '',
                 timeFrom: '',
                 timeTo: '',
-                orderList: [],
+                orderList: '',
                 orderPrice: '',
                 customer: '',
                 customerNumber: '',
@@ -32,7 +32,8 @@ class Create extends Component {
                 notes: '',
                 status: '',
                 poster: false, 
-                codes: []
+                codes: [],
+                payStatus: false
             },
             redirect: false, 
             types: [], 
@@ -45,6 +46,17 @@ class Create extends Component {
         this.localizer = this.localizer.bind(this);
         this.changePoster = this.changePoster.bind(this);
         this.promiseRequests = this.promiseRequests.bind(this);
+        this.changePayStatus = this.changePayStatus.bind(this);
+    }
+
+    changePayStatus() {
+        this.setState({
+            orderData: {
+                ...this.state.orderData,
+                payStatus: !this.state.orderData.payStatus
+            }
+        });
+        console.log(this.state.orderData.payStatus)
     }
 
     changePoster() {
@@ -155,7 +167,7 @@ class Create extends Component {
                             
                             <div className="form-group">
                                 <h5>Дата доставки:</h5>
-                                <input type='date' class="form-control" name="date" value={this.state.orderData.date} onChange={this.handleChange}></input>
+                                <input type='date' className="form-control" name="date" value={this.state.orderData.date} onChange={this.handleChange}></input>
                             </div>
 
                             <div className="form-group">
@@ -168,19 +180,9 @@ class Create extends Component {
 
                             <div className="form-group">
                                 <h5>Заказ :</h5>
-                                <Multiselect
-                                    data={this.state.types}
-                                    valueField="name"
-                                    textField="name"
-                                    onChange={value => {
-                                        this.setState({
-                                            orderData: {
-                                                ...this.state.orderData,
-                                                orderList: value.map(value => value.name)
-                                            } 
-                                        });
-                                    }}
-                                />
+                                <div className="form-group">
+                                <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="orderList"  value={this.state.orderData.orderList} onChange={this.handleChange}></textarea>
+                            </div>
                             </div>
 
                             <div className="form-group">
@@ -292,6 +294,10 @@ class Create extends Component {
                             <div className="form-group">
                                 <h5 htmlFor="name">Постер:</h5>
                                 <input className="form-control ml-5px pl-10px" name="poster" value={this.state.orderData.poster} type="checkbox" onChange={this.changePoster}/>                                 
+                            </div>
+                            <div className="form-group">
+                                <h5 htmlFor="name">Статус оплаты:</h5>
+                                <input className="form-control ml-5px pl-10px" name="payStatus" value={this.state.orderData.payStatus} type="checkbox" onChange={this.changePayStatus}/>                                 
                             </div>
                             <div className="form-group">
                                 <h5 htmlFor="name">Статус заказа:</h5>

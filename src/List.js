@@ -7,6 +7,8 @@ import DropdownList from 'react-widgets/lib/DropdownList';
 import Moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 
+const fileDownload = require('react-file-download');
+
 class List extends Component {
 
     constructor(props) {
@@ -261,6 +263,8 @@ class List extends Component {
         )
     }
 
+    
+
     findByReceiverNumber() {
         axios
         .get('https://flora-vitebsk.herokuapp.com/findByReceiverNumber?receiverNumber=' + this.state.findBtn)
@@ -272,6 +276,7 @@ class List extends Component {
             }
         )
     }
+
 
     findByReceiver() {
         axios
@@ -302,7 +307,7 @@ class List extends Component {
                     this.state.isResolve && this.state.orders instanceof Array ? (
                         <div>
                 <div className="search container">
-
+                        <h5 htmlFor="name">Поиск заказа:</h5>
                         <div className="row">
                             <select className="custom-select  col-8" onChange={this.selectSearch} name="searchName" placeholder="Тип поиска">
                                 <option value="" disabled selected>Тип поиска</option>
@@ -320,7 +325,7 @@ class List extends Component {
                     {
                         this.selectInput()
                     }
-
+                                
                 </div>
                  <table className="table table-bordered">
                     <thead className="thead-dark">
@@ -357,6 +362,9 @@ class List extends Component {
                             </th>
                             <th>
                                 Постер
+                            </th>
+                            <th>
+                                <i class="fas fa-dollar-sign"></i>
                             </th>
                             <th>
                                 Примечания

@@ -11,6 +11,7 @@ import axios from 'axios';
 import Edit from './Edit';
 import Cookies from 'universal-cookie';
 import FullOrder from './FullOrder';
+import GetFile from './GetFile';
 
 const cookies = new Cookies();
 
@@ -64,9 +65,8 @@ class App extends Component {
                   ) : (
                     <div>
                       <Route path={'/create'} exact render={() => <Create/>}/>
-                      <Route path={'/createproduct'} component={ CreateProduct }/>
-                      <Route path={'/pricelist'} component={ Prices }/>
                       <Route path={'/edit/:id'} component={ Edit }/>
+                      <Route path={'/getfile'} component={ GetFile }/>
                       <Route path={'/list'} component={ List }/>
                       <Route path={'/fullorder/:id'} component={ FullOrder }/>
                     </div>
