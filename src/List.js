@@ -191,24 +191,6 @@ class List extends Component {
                         <button type="button" className="btn btn-warning col-2 offset-1" onClick={this.findByStatus}>Найти</button>
                     </div>
                 ) 
-            case 'orderList':
-                return  (
-                    <div className="row find-input">
-                        <Multiselect
-                            className="col-8 pl-0px" 
-                            placeholder={'Заказ'}
-                            data={this.state.types}
-                            valueField="name"
-                            textField="name"
-                            onChange={value => {
-                                this.setState({
-                                    findByOrder: value.map(value => value.name)
-                                });
-                            }}
-                        />
-                        <button type="button" className="btn btn-warning col-2 offset-1" onClick={this.findByOrderList}>Найти</button>
-                    </div>
-                ) 
         }
     }
 
@@ -315,7 +297,6 @@ class List extends Component {
                                 <option value="receiver">Имя получателя</option>
                                 <option value="customerNumber">Телефон заказчика</option>
                                 <option value="receiverNumber">Телефон получателя</option>
-                                <option value="orderList">Заказ</option>
                                 <option value="status">Статус</option>
                             </select>
                             <button type="button" className="col-2 offset-1 btn btn-primary" onClick={this.resetSearch}> Сброс</button>
