@@ -24,6 +24,7 @@ class List extends Component {
             searchName: '', 
             findByOrder: [],
             status: '', 
+            payStatus: false,
             redirect: false, 
             logOut: false, 
             idForOpen: ''
@@ -42,6 +43,7 @@ class List extends Component {
         this.findByReceiverNumber = this.findByReceiverNumber.bind(this);
         this.findByOrderList = this.findByOrderList.bind(this);
         this.findByStatus = this.findByStatus.bind(this);
+        this.findByPayStatus = this.findByPayStatus.bind(this);
         this.changeRedirect = this.changeRedirect.bind(this);
         this.localizer = this.localizer.bind(this);
         this.resetSearch = this.resetSearch.bind(this);
@@ -121,6 +123,7 @@ class List extends Component {
     
     componentWillMount() {
         this.localizer();
+        console.log('vrtvtv', this.state.payStatus)
         this.promiseRequests()
             .then(() => {
                 this.setState({
@@ -191,6 +194,24 @@ class List extends Component {
                         <button type="button" className="btn btn-warning col-2 offset-1" onClick={this.findByStatus}>Найти</button>
                     </div>
                 ) 
+                case 'payStatus':
+                    return  (
+                        <div className="row find-input">
+                            <DropdownList
+                                className="col-8 pl-0px" 
+                                data={[{val: 'Оплачен', className: true}, {val: 'Не оплачен', className: false}]}
+                                textField="val"
+                                valueField="className"
+                                onChange={value => {
+                                    this.setState({
+                                            payStatus: value.className 
+                                    });
+                                    console.log('ach', this.state.payStatus)
+                                } }
+                            />             
+                            <button type="button" className="btn btn-warning col-2 offset-1" onClick={this.findByPayStatus}>Найти</button>
+                        </div>
+                    ) 
         }
     }
 
@@ -211,7 +232,20 @@ class List extends Component {
 
     findByStatus() {
         axios
-            .get('https://flora-vitebsk.herokuapp.com/findByStatus?status=' + this.state.status)
+            .get('https://flora-vitebsk.herokuapp.com/findByStatus?status=' + this.state.payStatus)
+            .then(
+                response => {
+                    this.setState({
+                        orders: response.data
+                    })
+                }
+            )
+    }
+
+    findByPayStatus() {
+        console.log('f',this.state.payStatus);
+        axios
+            .get('https://flora-vitebsk.herokuapp.com/findByPayStatus?payStatus=' + this.state.payStatus)
             .then(
                 response => {
                     this.setState({
@@ -273,9 +307,6 @@ class List extends Component {
     }
     
     render() {
-
-        console.log(this.state.orders);
-
         if(this.state.redirect) {
             return(
                 <Redirect to={'/fullorder/' + this.state.idForDelete}/>
@@ -298,6 +329,7 @@ class List extends Component {
                                 <option value="customerNumber">Телефон заказчика</option>
                                 <option value="receiverNumber">Телефон получателя</option>
                                 <option value="status">Статус</option>
+                                <option value="payStatus">Оплата</option>
                             </select>
                             <button type="button" className="col-2 offset-1 btn btn-primary" onClick={this.resetSearch}> Сброс</button>
                         </div>
