@@ -182,7 +182,7 @@ class List extends Component {
                     <div className="row find-input">
                         <DropdownList
                             className="col-8 pl-0px" 
-                            data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
+                            data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Постер', className: 'order-done'}]}
                             textField="val"
                             valueField="className"
                             onChange={value => {
@@ -232,7 +232,7 @@ class List extends Component {
 
     findByStatus() {
         axios
-            .get('https://flora-vitebsk.herokuapp.com/findByStatus?status=' + this.state.payStatus)
+            .get('https://flora-vitebsk.herokuapp.com/findByStatus?status=' + this.state.status)
             .then(
                 response => {
                     this.setState({
@@ -340,7 +340,8 @@ class List extends Component {
                     }
                                 
                 </div>
-                 <table className="table table-bordered">
+                <div className='table-div'>
+                     <table className="table table-bordered table-fixed">
                     <thead className="thead-dark">
                         <tr className="text-center">
                             <th>
@@ -351,9 +352,6 @@ class List extends Component {
                             </th>
                             <th>
                                 Заказ
-                            </th>
-                            <th>
-                                Сумма
                             </th>
                             <th>
                                 Заказчик
@@ -374,7 +372,7 @@ class List extends Component {
                                 Тип платы
                             </th>
                             <th>
-                                Постер
+                                Сумма
                             </th>
                             <th>
                                 <i class="fas fa-dollar-sign"></i>
@@ -396,6 +394,8 @@ class List extends Component {
                         }
                     </tbody>
                 </table>
+                </div>
+                
             </div>
                     ) : (
                         <div className="spinner-block">

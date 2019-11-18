@@ -196,19 +196,13 @@ class Edit extends Component {
                                     <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="orderList"  value={this.state.order.orderList} onChange={this.handleChange}></textarea>
                                 </div>
 
-                                <div className="form-group">
-                                    <h5>Сумма заказа:</h5>
-                                    <input type="text" className="form-control" placeholder="Сумма заказа" name="orderPrice" value={this.state.order.orderPrice} onChange={this.handleChange}/>
-                                </div>
+                                 <div style={{ width: '100%', height: '2px', backgroundColor: 'black', margin: '50px 0px 50px 0px' }}></div>
 
                                 <div className="form-group">
-                                    <h5>Имя заказчика:</h5>
-                                    <input type="text" className="form-control" placeholder="Имя заказчика" name="customer" value={this.state.order.customer} onChange={this.handleChange}/>
-                                </div>
-
-                                <div className="form-group">
-                                    <h5>Номер телефона заказчика:</h5>
+                                    <h5>Заказчик:</h5>
                                     <div className="row">
+                                     <input type="text" className="form-control col-4 ml-5px" placeholder="Имя заказчика" name="customer" value={this.state.order.customer} onChange={this.handleChange}/>
+                                     <h3 className="ml-5px"><i class="fas fa-phone"></i></h3>
                                         <DropdownList
                                             className="col-2 ml-5px pl-10px" 
                                             data={['+375', '+777']} 
@@ -223,18 +217,15 @@ class Edit extends Component {
                                                 });
                                             }}
                                         />
-                                    <input type="text" className="form-control col-5 ml-5" name="customerNumber" value={this.state.order.customerNumber} onChange={this.handleChange}/>
+                                    <input type="text" className="form-control col-5 ml-5px" name="customerNumber" value={this.state.order.customerNumber} onChange={this.handleChange}/>
                                     </div>
                                 </div>
 
                                 <div className="form-group">
-                                    <h5>Имя получателя:</h5>
-                                    <input type="text" className="form-control" placeholder="Имя получателя" name="receiver" value={this.state.order.receiver} onChange={this.handleChange}/>
-                                </div>
-
-                                <div className="form-group">
-                                    <h5>Номер телефона получателя:</h5>
+                                    <h5>Получатель:</h5>
                                     <div className="row">
+                                    <input type="text" className="form-control col-4 ml-5px" placeholder="Имя получателя" name="receiver" value={this.state.order.receiver} onChange={this.handleChange}/>
+                                    <h3 className="ml-5px"><i class="fas fa-phone"></i></h3>
                                         <DropdownList
                                             className="col-2 ml-5px pl-10px"   
                                             data={['+375', '+777']} 
@@ -249,7 +240,8 @@ class Edit extends Component {
                                                 });
                                             }}
                                         />
-                                        <input type="text" className="form-control col-5 ml-5" name="receiverNumber" value={this.state.order.receiverNumber} onChange={this.handleChange}/>
+                                        <input type="text" className="form-control col-5 ml-5px" name="receiverNumber" value={this.state.order.receiverNumber} onChange={this.handleChange}/>
+                                        
                                     </div>
                                 </div>
                                 
@@ -297,21 +289,23 @@ class Edit extends Component {
                                     />                                
                                 </div>
 
+                                 <div style={{ width: '100%', height: '2px', backgroundColor: 'black', margin: '50px 0px 50px 0px' }}></div>
+
+                                 <div className="form-group">
+                                    <h5>Сумма заказа:</h5>
+                                    <input type="text" className="form-control" placeholder="Сумма заказа" name="orderPrice" value={this.state.order.orderPrice} onChange={this.handleChange}/>
+                                </div>
+
                                 <div className="form-group">
                                     <h5 htmlFor="name">Статус оплаты:</h5>
                                     <input className="form-control ml-5px pl-10px" checked={this.state.isSelectedStatus} name="payStatus" value={this.state.order.payStatus} type="checkbox" onChange={this.changePayStatus}/>                                 
                                 </div>
 
-                                <div className="form-group">
-                                    <h5 htmlFor="name">Постер:</h5>
-                                    <input className="form-control ml-5px pl-10px" checked={this.state.isSelected} name="poster" value={this.state.order.poster} type="checkbox" onChange={this.changePoster}/>                                 
-                                </div>  
-
                             <div className="form-group">
                                 <h5 htmlFor="name">Статус заказа:</h5>
                                 <DropdownList
                                     value={this.state.order.status}
-                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
+                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Постер', className: 'order-done'}]}
                                     textField="val"
                                     valueField="className"
                                     onChange={value => {

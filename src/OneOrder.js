@@ -47,64 +47,53 @@ class OneOrder extends Component{
 
     return (
         <tr className="text-center" className={this.props.order.status} >
-            <td className="date-tr" onClick={this.showOrder}>
+            <td className="date-tr">
                 {this.props.order.date.split('-').reverse().join('-')}
             </td>
-            <td className="text-center" onClick={this.showOrder}>
+            <td className="text-center">
                 {this.props.order.timeFrom + '-' + this.props.order.timeTo}
             </td>
-            <td className="text-center" onClick={this.showOrder}>
+            <td className="text-center">
                 {
                     this.props.order.orderList
                 }
             </td>
-            <td className="text-center" onClick={this.showOrder}>
-                {this.props.order.orderPrice}
-            </td>
-            <td className="text-center" onClick={this.showOrder}>
+            <td className="text-center" >
                 {this.props.order.customer}
             </td>
-            <td className="text-center" onClick={this.showOrder}>
+            <td className="text-center" >
                 {
                     this.props.order.customerNumber ? (this.props.order.customerNumberCode + this.props.order.customerNumber) : ('')
                     
                 }
             </td>
-            <td className="text-center" onClick={this.showOrder}>
+            <td className="text-center" >
                 {this.props.order.receiver}
             </td>
-            <td className="text-center" onClick={this.showOrder}> 
+            <td className="text-center" > 
                 {
                     this.props.order.receiverNumber ? (this.props.order.receiverNumberCode + this.props.order.receiverNumber) : ('')
                 }
             </td>
-            <td className="text-center" onClick={this.showOrder}>
+            <td className="text-center" >
                 {
                     street + house + porch + floor + flat
                 }
             </td>
-            <td className="text-center" onClick={this.showOrder}>
+            <td className="text-center" >
                 {this.props.order.paymentMethod}
             </td>
-            <td className="text-center" onClick={this.showOrder}>
-                {
-                    this.props.order.poster ? (
-                        <i class="fa fa-check" aria-hidden="true"></i>
-                    ) : (
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                    )
-                }
+            <td className="text-center" >
+                {this.props.order.orderPrice}
             </td>
-            <td className="text-center">
                 {
                     this.props.order.payStatus ? (
-                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <td className="pay-done"></td>
                     ) : (
-                        <i class="fa fa-times" aria-hidden="true"></i>
+                        <td className="pay-false"></td>
                     )
                 }
-            </td>
-            <td className="text-center" onClick={this.showOrder}>
+            <td className="text-center">
                 {this.props.order.notes}
             </td>
             <td className="text-center">

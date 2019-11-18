@@ -65,7 +65,7 @@ th {
 }
 
 .ml-5px {
-  margin-left: 5px;
+  margin-left: 15px;
 }
 
 .pl-10px {
@@ -189,6 +189,32 @@ td {
   background-color: #C2C7C4;
 }
 
+
+table th{
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  position: sticky;
+  top: 0px;
+}
+
+.table-div {
+    
+}
+
+.stbody {
+  height: calc(100vh - 250px);;
+  width: 100%;
+}
+
+.pay-done {
+  background-color: lightgreen;
+}
+
+.pay-false {
+  background-color: red;
+}
 
 
 

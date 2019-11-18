@@ -185,21 +185,15 @@ class Create extends Component {
                             </div>
                             </div>
 
-                            <div className="form-group">
-                                <h5>Сумма заказа:</h5>
-                                <input type="text" className="form-control" placeholder="Сумма заказа" name="orderPrice" value={this.state.orderData.orderPrice} onChange={this.handleChange}/>
-                            </div>
+                            <div style={{ width: '100%', height: '2px', backgroundColor: 'black', margin: '50px 0px 50px 0px' }}></div>
 
                             <div className="form-group">
-                                <h5>Имя заказчика:</h5>
-                                <input type="text" className="form-control" placeholder="Имя заказчика" name="customer" value={this.state.orderData.customer} onChange={this.handleChange}/>
-                            </div>
-
-                            <div className="form-group">
-                                <h5>Номер телефона заказчика:</h5>
+                                <h5>Заказчик:</h5>
                                 <div className="row">
+                                <input type="text" className="form-control ml-5px pl-10px col-4" placeholder="Имя заказчика" name="customer" value={this.state.orderData.customer} onChange={this.handleChange}/>
+                                <h3 className="ml-5px"><i class="fas fa-phone"></i></h3>
                                 <DropdownList filter
-                                    className="col-2 ml-5px pl-10px" 
+                                    className="col-2" 
                                     data={this.state.codes} 
                                     defaultValue={'+375'}
                                     placeholder={"Улица"} 
@@ -215,20 +209,17 @@ class Create extends Component {
                                         console.log(this.state.orderData);
                                     }}
                                 />
-                                    <input type="text" className="form-control col-5 ml-5" name="customerNumber" value={this.state.orderData.customerNumber} onChange={this.handleChange}/>
+                                    <input type="text" className="form-control col-5" name="customerNumber" value={this.state.orderData.customerNumber} onChange={this.handleChange}/>
                                 </div>
                             </div>
 
                             <div className="form-group">
-                                <h5>Имя получателя:</h5>
-                                <input type="text" className="form-control" placeholder="Имя получателя" name="receiver" value={this.state.orderData.receiver} onChange={this.handleChange}/>
-                            </div>
-
-                            <div className="form-group">
-                                <h5>Номер телефона получателя:</h5>
+                                <h5>Получатель:</h5>
                                 <div className="row">
+                                <input type="text" className="form-control ml-5px pl-10px col-4" placeholder="Имя получателя" name="receiver" value={this.state.orderData.receiver} onChange={this.handleChange}/>
+                                <h3 className="ml-5px"><i class="fas fa-phone"></i></h3>
                                 <DropdownList filter
-                                    className="col-2 ml-5px pl-10px"   
+                                    className="col-2"   
                                     data={this.state.codes} 
                                     defaultValue={'+375'}
                                     placeholder={"Улица"} 
@@ -244,8 +235,9 @@ class Create extends Component {
                                         console.log(this.state.orderData);
                                     }}
                                 />
-                                    <input type="text" className="form-control col-5 ml-5" name="receiverNumber" value={this.state.orderData.receiverNumber} onChange={this.handleChange}/>
+                                    <input type="text" className="form-control col-5" name="receiverNumber" value={this.state.orderData.receiverNumber} onChange={this.handleChange}/>
                                 </div>
+                                
                             </div>
                             
                             <div className="form-group">
@@ -274,6 +266,8 @@ class Create extends Component {
                                 </div>
                             </div>
 
+                            <div style={{ width: '100%', height: '2px', backgroundColor: 'black', margin: '50px 0px 50px 0px' }}></div>
+
                             <div className="form-group">
                             <h5>Способ оплаты: </h5>
                             <DropdownList
@@ -291,10 +285,16 @@ class Create extends Component {
                                     } }
                                 />                                
                             </div>
+
                             <div className="form-group">
+                                <h5>Сумма заказа:</h5>
+                                <input type="text" className="form-control" placeholder="Сумма заказа" name="orderPrice" value={this.state.orderData.orderPrice} onChange={this.handleChange}/>
+                            </div>
+
+                            {/* <div className="form-group">
                                 <h5 htmlFor="name">Постер:</h5>
                                 <input className="form-control ml-5px pl-10px" name="poster" value={this.state.orderData.poster} type="checkbox" onChange={this.changePoster}/>                                 
-                            </div>
+                            </div> */}
                             <div className="form-group">
                                 <h5 htmlFor="name">Статус оплаты:</h5>
                                 <input className="form-control ml-5px pl-10px" name="payStatus" value={this.state.orderData.payStatus} type="checkbox" onChange={this.changePayStatus}/>                                 
@@ -303,7 +303,7 @@ class Create extends Component {
                                 <h5 htmlFor="name">Статус заказа:</h5>
                                 <DropdownList
                                     defaultValue={{val: 'Принят', className: 'order-accepted'}}
-                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Доставлен', className: 'order-done'}]}
+                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Постер', className: 'order-done'}]}
                                     textField="val"
                                     valueField="className"
                                     onChange={value => {
