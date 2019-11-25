@@ -341,59 +341,61 @@ class List extends Component {
                                 
                 </div>
                 <div className='table-div'>
-                     <table className="table table-bordered table-fixed">
-                    <thead className="thead-dark">
-                        <tr className="text-center">
-                            <th>
-                                Дата
-                            </th>
-                            <th>
-                                Время
-                            </th>
-                            <th>
-                                Заказ
-                            </th>
-                            <th>
-                                Заказчик
-                            </th>
-                            <th>
-                                Телефон заказчика
-                            </th>
-                            <th>
-                                Получатель
-                            </th>
-                            <th>
-                                Телефон получателя
-                            </th>
-                            <th>
-                                Адрес
-                            </th>
-                            <th>
-                                Тип платы
-                            </th>
-                            <th>
-                                Сумма
-                            </th>
-                            <th>
-                                <i class="fas fa-dollar-sign"></i>
-                            </th>
-                            <th>
-                                Примечания
-                            </th>
-                            <th>
-                                <i className="fas fa-edit fa-main"></i>
-                            </th>
-                            <th>
-                                <i className="fas fa-trash-alt fa-main"></i>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            this.showPosts()
-                        }
-                    </tbody>
-                </table>
+                <div className="table-wrapper">
+                    <table className="table table-bordered table-fixed">
+                        <thead className="thead-dark">
+                            <tr className="text-center">
+                                <th>
+                                    Дата
+                                </th>
+                                <th>
+                                    Время
+                                </th>
+                                <th>
+                                    Заказ
+                                </th>
+                                <th>
+                                    Заказчик
+                                </th>
+                                <th>
+                                    Телефон заказчика
+                                </th>
+                                <th>
+                                    Получатель
+                                </th>
+                                <th>
+                                    Телефон получателя
+                                </th>
+                                <th>
+                                    Адрес
+                                </th>
+                                <th>
+                                    Тип платы
+                                </th>
+                                <th>
+                                    Сумма
+                                </th>
+                                <th>
+                                    <i class="fas fa-dollar-sign"></i>
+                                </th>
+                                <th>
+                                    Примечания
+                                </th>
+                                <th>
+                                    <i className="fas fa-edit fa-main"></i>
+                                </th>
+                                <th>
+                                    <i className="fas fa-trash-alt fa-main"></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className='aaa'>
+                            {
+                                this.showPosts()
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 </div>
                 
             </div>

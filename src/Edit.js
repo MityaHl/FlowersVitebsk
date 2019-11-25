@@ -247,29 +247,10 @@ class Edit extends Component {
                                 
                                 <div className="form-group">
                                     <h5>Адрес получателя: </h5>
-                                    <DropdownList filter 
-                                        data={this.state.streets} 
-                                        value={this.state.order.street} 
-                                        valueField="name"
-                                        textField="name"
-                                        placeholder={"Улица"}
-                                        onChange={ value => {
-                                            this.setState({
-                                                order: {
-                                                    ...this.state.order,
-                                                    street: value.name
-                                                }
-                                            })
-                                        } }
-                                    />
-                                    <br/>
-                                    <div className="form-flex-spb ml-5px form-row">
-                                        <input className="form-control col-2 ml-5px pl-10px" name="house" value={this.state.order.house} type="text" placeholder="Дом" onChange={this.handleChange}/>                                 
-                                        <input className="form-control col-2 ml-5px pl-10px" name="porch" value={this.state.order.porch}  type="text" placeholder="Подъезд" onChange={this.handleChange}/>
-                                        <input className="form-control col-2 ml-5px pl-10px" name="floor" value={this.state.order.floor} type="text" placeholder="Этаж" onChange={this.handleChange}/>                   
-                                        <input className="form-control col-2 ml-5px pl-10px" name="flat" value={this.state.order.flat} type="text" placeholder="Квартира" onChange={this.handleChange}/>                             
-                                    </div>
+                                        <input className="form-control" name="street" value={this.state.order.street} type="text" placeholder="Адрес" onChange={this.handleChange}/>                                 
                                 </div>
+
+                                <div style={{ width: '100%', height: '2px', backgroundColor: 'black', margin: '50px 0px 50px 0px' }}></div>
 
                                 <div className="form-group">
                                 <h5>Способ оплаты: </h5>
@@ -289,7 +270,7 @@ class Edit extends Component {
                                     />                                
                                 </div>
 
-                                 <div style={{ width: '100%', height: '2px', backgroundColor: 'black', margin: '50px 0px 50px 0px' }}></div>
+                                 
 
                                  <div className="form-group">
                                     <h5>Сумма заказа:</h5>

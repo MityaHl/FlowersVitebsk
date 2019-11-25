@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.table-wrapper {
+  max-height: calc(100vh - 210px);
+  overflow: none;
+  overflow-y: scroll;
+}

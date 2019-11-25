@@ -242,28 +242,7 @@ class Create extends Component {
                             
                             <div className="form-group">
                                 <h5>Адрес получателя: </h5>
-                                <DropdownList filter 
-                                    data={this.state.streets} 
-                                    placeholder={"Улица"} 
-                                    valueField="name"
-                                    textField="name"
-                                    onChange={value => {
-                                        this.setState({
-                                            orderData: {
-                                                ...this.state.orderData,
-                                                street: value.name
-                                            }
-                                        });
-                                        console.log(this.state.orderData);
-                                    }}
-                                />
-                                <br/>
-                                <div className="form-flex-spb ml-5px form-row">
-                                    <input className="form-control col-2 ml-5px pl-10px" name="house" value={this.state.orderData.house} type="text" placeholder="Дом" onChange={this.handleChange}/>                                 
-                                    <input className="form-control col-2 ml-5px pl-10px" name="porch" value={this.state.orderData.porch} type="text" placeholder="Подъезд" onChange={this.handleChange}/>
-                                    <input className="form-control col-2 ml-5px pl-10px" name="floor" value={this.state.orderData.floor} type="text" placeholder="Этаж" onChange={this.handleChange}/>                   
-                                    <input className="form-control col-2 ml-5px pl-10px" name="flat" value={this.state.orderData.flat} type="text" placeholder="Квартира" onChange={this.handleChange}/>                             
-                                </div>
+                                <input className="form-control" name="street" value={this.state.orderData.street} type="text" placeholder="Адрес" onChange={this.handleChange}/>                                                           
                             </div>
 
                             <div style={{ width: '100%', height: '2px', backgroundColor: 'black', margin: '50px 0px 50px 0px' }}></div>
