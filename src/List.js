@@ -346,6 +346,9 @@ class List extends Component {
                         <thead className="thead-dark">
                             <tr className="text-center">
                                 <th>
+                                    №
+                                </th>
+                                <th>
                                     Дата
                                 </th>
                                 <th>

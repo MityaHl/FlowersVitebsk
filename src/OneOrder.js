@@ -48,6 +48,9 @@ class OneOrder extends Component{
     return (
         <tr className="text-center" className={this.props.order.status} >
             <td className="date-tr">
+                {this.props.order.id}
+            </td>
+            <td className="date-tr">
                 {this.props.order.date.split('-').reverse().join('-')}
             </td>
             <td className="text-center">
