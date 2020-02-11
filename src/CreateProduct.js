@@ -2,33 +2,33 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Redirect} from "react-router-dom";
 
-class Create extends Component {
+class CreateCurier extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            productData: {
-                name: ''
+            curierData: {
+                data: ''
             }, 
             redirect: false
         }
         this.handleChange = this.handleChange.bind(this);
-        this.saveOrder = this.saveOrder.bind(this);
+        this.saveCurier = this.saveCurier.bind(this);
     }
 
     handleChange(e){
         this.setState({
-            productData: {
-                ...this.state.productData,
+            curierData: {
+                ...this.state.curierData,
                 [e.target.name]: e.target.value
             }
         });
-        console.log(this.state.productData);
+        console.log(this.state.curierData);
     }
 
-    saveOrder(e) {
+    saveCurier(e) {
         e.preventDefault();
         axios
-            .post('https://flora-vitebsk.herokuapp.com/addOrderType', this.state.productData)
+            .post('https://flora-vitebsk.herokuapp.com/addCourier', this.state.curierData)
             .then(
                 setTimeout(()=>{
                     this.setState({
@@ -41,20 +41,20 @@ class Create extends Component {
     render() {
 
         if (this.state.redirect) {
-            return <Redirect to='/pricelist'/>;
+            return <Redirect to='/list'/>;
         }
 
         return(
             <div className="create container">
-                <form onSubmit={this.saveOrder}>
+                <form onSubmit={this.saveCurier}>
                             
                     <div className="form-group">
-                        <h5>Название продукта:</h5>
-                        <input type="text" className="form-control" name="name" placeholder="Название продукта" value={this.state.productData.name} onChange={this.handleChange}/>
+                        <h5>Информация о курьере:</h5>
+                        <input type="text" className="form-control" name="data" placeholder="Информация о курьере" value={this.state.curierData.data} onChange={this.handleChange}/>
                     </div>
 
                     <div className="create-button">
-                        <button className="btn btn-primary">Добавить товар</button>
+                        <button className="btn btn-primary">Добавить курьера</button>
                     </div>
                 </form>
             </div>
@@ -62,4 +62,4 @@ class Create extends Component {
     }
 }
 
-export default Create;
+export default CreateCurier;

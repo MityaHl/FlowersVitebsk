@@ -379,6 +379,9 @@ class List extends Component {
                                     Сумма
                                 </th>
                                 <th>
+                                    Курьер
+                                </th>
+                                <th>
                                     <i class="fas fa-dollar-sign"></i>
                                 </th>
                                 <th>

@@ -15,7 +15,8 @@ class Edit extends Component {
             order: {}, 
             isResolve: false,
             redirect: false,
-            types: [], 
+            types: [],
+            couriers: [],
             streets: [],
             payments: [], 
             isSelected: '',
@@ -88,13 +89,22 @@ class Edit extends Component {
         let countQuery = 0;
         return new Promise( resolve => {
             axios
+            .get('https://flora-vitebsk.herokuapp.com/getCouriers')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        couriers: response.data
+                    });
+                    if(countQuery == 5) resolve();
+                });
+            axios
             .get('https://flora-vitebsk.herokuapp.com/getOrderById?id=' + this.props.match.params.id)
                 .then(response => {
                     countQuery++;
                     this.setState({
                         order: response.data
                     });
-                    if(countQuery == 4) resolve();
+                    if(countQuery == 5) resolve();
                 });
             axios
             .get('https://flora-vitebsk.herokuapp.com/getStreets')
@@ -103,7 +113,7 @@ class Edit extends Component {
                     this.setState({
                         streets: response.data
                     });
-                    if(countQuery == 4) resolve();
+                    if(countQuery == 5) resolve();
                 });
             axios
             .get('https://flora-vitebsk.herokuapp.com/getOrderTypes')
@@ -112,7 +122,7 @@ class Edit extends Component {
                     this.setState({
                         types: response.data
                     });
-                    if(countQuery == 4) resolve();
+                    if(countQuery == 5) resolve();
                 });
             axios
             .get('https://flora-vitebsk.herokuapp.com/getPaymentMethods')
@@ -121,7 +131,7 @@ class Edit extends Component {
                     this.setState({
                         payments: response.data
                     });
-                    if(countQuery == 4) resolve();
+                    if(countQuery == 5) resolve();
                 });
         })
     }
@@ -280,6 +290,22 @@ class Edit extends Component {
                                 <div className="form-group">
                                     <h5 htmlFor="name">Статус оплаты:</h5>
                                     <input className="form-control ml-5px pl-10px" checked={this.state.isSelectedStatus} name="payStatus" value={this.state.order.payStatus} type="checkbox" onChange={this.changePayStatus}/>                                 
+                                </div>
+
+                                <div class="form-group">
+                                    <h5 htmlFor="name">Курьер:</h5>
+                                    <select class="form-control" id="exampleFormControlSelect1" name="courier" defaultValue={this.state.order.courier} value={this.state.order.courier} onChange={this.handleChange}>
+                                        <option value="">
+                                            Без курьера
+                                        </option>
+                                        {
+                                            this.state.couriers.map((courier, index) => (
+                                                <option value={courier.data}>
+                                                    {courier.data}
+                                                </option>
+                                            ))
+                                        }
+                                    </select>
                                 </div>
 
                             <div className="form-group">

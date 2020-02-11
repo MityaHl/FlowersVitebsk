@@ -15,9 +15,11 @@ class Create extends Component {
                 date: '',
                 timeFrom: '',
                 timeTo: '',
+                courier: '',
                 orderList: '',
                 orderPrice: '',
                 customer: '',
+                courier: '',
                 customerNumber: '',
                 customerNumberCode: '+375',
                 receiverNumberCode: '+375',
@@ -38,7 +40,8 @@ class Create extends Component {
             redirect: false, 
             types: [], 
             streets: [],
-            payments: []
+            payments: [],
+            couriers: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.saveOrder = this.saveOrder.bind(this);
@@ -75,13 +78,22 @@ class Create extends Component {
         let countQuery = 0;
         return new Promise( resolve => {
             axios
+            .get('https://flora-vitebsk.herokuapp.com/getCouriers')
+                .then(response => {
+                    countQuery++;
+                    this.setState({
+                        couriers: response.data
+                    });
+                    if(countQuery == 5) resolve();
+                });
+            axios
             .get('https://flora-vitebsk.herokuapp.com/getStreets')
                 .then(response => {
                     countQuery++;
                     this.setState({
                         streets: response.data
                     });
-                    if(countQuery == 4) resolve();
+                    if(countQuery == 5) resolve();
                 });
             axios
             .get('https://flora-vitebsk.herokuapp.com/getOrderTypes')
@@ -90,7 +102,7 @@ class Create extends Component {
                     this.setState({
                         types: response.data
                     });
-                    if(countQuery == 4) resolve();
+                    if(countQuery == 5) resolve();
                 });
             axios
             .get('https://flora-vitebsk.herokuapp.com/getPaymentMethods')
@@ -99,7 +111,7 @@ class Create extends Component {
                     this.setState({
                         payments: response.data
                     });
-                    if(countQuery == 4) resolve();
+                    if(countQuery == 5) resolve();
                 });
             axios
             .get('https://flora-vitebsk.herokuapp.com/getNumberCodes')
@@ -108,7 +120,7 @@ class Create extends Component {
                     this.setState({
                         codes: response.data
                     });
-                    if(countQuery == 4) resolve();
+                    if(countQuery == 5) resolve();
                 });
         })
     }
@@ -156,7 +168,6 @@ class Create extends Component {
     }
 
     render() {
-
         if (this.state.redirect) {
             return <Redirect to='/list'/>;
         }
@@ -278,6 +289,23 @@ class Create extends Component {
                                 <h5 htmlFor="name">Статус оплаты:</h5>
                                 <input className="form-control ml-5px pl-10px" name="payStatus" value={this.state.orderData.payStatus} type="checkbox" onChange={this.changePayStatus}/>                                 
                             </div>
+                            
+                            <div class="form-group">
+                                <h5 htmlFor="name">Курьер:</h5>
+                                <select class="form-control" id="exampleFormControlSelect1" name="courier" defaultValue={this.state.orderData.courier} value={this.state.orderData.courier} onChange={this.handleChange}>
+                                    <option value="">
+                                        Без курьера
+                                    </option>
+                                    {
+                                        this.state.couriers.map((courier, index) => (
+                                            <option value={courier.data}>
+                                                {courier.data}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+
                             <div className="form-group">
                                 <h5 htmlFor="name">Статус заказа:</h5>
                                 <DropdownList

@@ -57,6 +57,9 @@ class Header extends Component{
                 <Link to={'/list'}>
                     <button className="btn btn-success menu-btn"> Список заказов </button>
                 </Link>
+                <Link to={'/createcourier'}>
+                    <button className="btn btn-success menu-btn"> Добавить курьера </button>
+                </Link>
                 <Link to={'/getfile'}>
                     <button className="btn btn-success menu-btn"> Получить файл </button>
                 </Link>

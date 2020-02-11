@@ -5,7 +5,7 @@ import Header from './Header';
 import List from './List';
 import Create from './Create';
 import Prices from './Prices';
-import CreateProduct from './CreateProduct';
+import CreateCurier from './CreateProduct';
 import LogIn from './LogIn';
 import axios from 'axios';
 import Edit from './Edit';
@@ -65,6 +65,7 @@ class App extends Component {
                   ) : (
                     <div>
                       <Route path={'/create'} exact render={() => <Create/>}/>
+                      <Route path={'/createcourier'} component={ CreateCurier }/>
                       <Route path={'/edit/:id'} component={ Edit }/>
                       <Route path={'/getfile'} component={ GetFile }/>
                       <Route path={'/list'} component={ List }/>

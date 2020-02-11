@@ -38,7 +38,7 @@ class OneOrder extends Component{
     }
 
   render() {
-
+      console.log(this.props.order)
     let street = this.props.order.street ? (this.props.order.street) : ('')
     let house = this.props.order.house ? ( '   д. ' + this.props.order.house) : ('')
     let porch = this.props.order.porch ? ( '   пд. ' + this.props.order.porch) : ('')
@@ -47,7 +47,7 @@ class OneOrder extends Component{
 
     return (
         <tr className="text-center" className={this.props.order.status} >
-            <td className="date-tr">
+            <td className="text-center">
                 {this.props.order.id}
             </td>
             <td className="date-tr">
@@ -88,6 +88,9 @@ class OneOrder extends Component{
             </td>
             <td className="text-center" >
                 {this.props.order.orderPrice}
+            </td>
+            <td className="text-center" >
+                {this.props.order.courier}
             </td>
                 {
                     this.props.order.payStatus ? (
