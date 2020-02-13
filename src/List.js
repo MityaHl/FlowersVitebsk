@@ -48,6 +48,8 @@ class List extends Component {
         this.localizer = this.localizer.bind(this);
         this.resetSearch = this.resetSearch.bind(this);
         this.changeLogOut = this.changeLogOut.bind(this);
+        this.findById = this.findById.bind(this);
+        this.findByNum = this.findByNum.bind(this);
     }
 
     changeLogOut() {
@@ -104,7 +106,8 @@ class List extends Component {
             .get('https://flora-vitebsk.herokuapp.com/getOrders')
             .then(response => {
                 this.setState({
-                    orders: response.data
+                    orders: response.data,
+                    searchName: ''
                 });
             });
     }
@@ -148,6 +151,19 @@ class List extends Component {
 
     selectInput() {
         switch (this.state.searchName) {
+            case 'id':
+                return  (
+                    <div className="row find-input">
+                        <input className="form-control col-8" type="text" onChange={this.findBtnValue} placeholder="Номер заказа"/>
+                        <button type="button" className="btn btn-warning col-2 offset-1 ml-5px" onClick={this.findById}>Найти</button>
+                    </div>
+                )
+            case 'num':
+                return  (
+                    <div className="row find-input">
+                        <button type="button" className="btn btn-warning col-8" onClick={this.findByNum}>Найти</button>
+                    </div>
+                )
             case 'customer':
                 return  (
                     <div className="row find-input">
@@ -212,7 +228,24 @@ class List extends Component {
                             <button type="button" className="btn btn-warning col-2 offset-1" onClick={this.findByPayStatus}>Найти</button>
                         </div>
                     ) 
+                default:
+                    return (
+                        <div></div>
+                    )
         }
+    }
+
+    findByNum() {
+        axios
+            .get('https://flora-vitebsk.herokuapp.com/getOrdersByIdDesc')
+            .then(
+                response => {
+                    this.setState({
+                        orders: response.data,
+                        searchName: ''
+                    })
+                }
+            )
     }
 
     findByOrderList() {
@@ -243,7 +276,6 @@ class List extends Component {
     }
 
     findByPayStatus() {
-        console.log('f',this.state.payStatus);
         axios
             .get('https://flora-vitebsk.herokuapp.com/findByPayStatus?payStatus=' + this.state.payStatus)
             .then(
@@ -265,6 +297,18 @@ class List extends Component {
                 })
             }
         )
+    }
+
+    findById() {
+        axios
+            .get('https://flora-vitebsk.herokuapp.com/getOrderById?id=' + this.state.findBtn)
+            .then(
+                response => {
+                    this.setState({
+                        orders: [response.data]
+                    })
+                }
+            )
     }
 
     findByCustomerNumber() {
@@ -330,6 +374,8 @@ class List extends Component {
                                 <option value="receiverNumber">Телефон получателя</option>
                                 <option value="status">Статус</option>
                                 <option value="payStatus">Оплата</option>
+                                <option value="id">Номер заказа</option>
+                                <option value="num">От новых к старым</option>
                             </select>
                             <button type="button" className="col-2 offset-1 btn btn-primary" onClick={this.resetSearch}> Сброс</button>
                         </div>

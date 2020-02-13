@@ -38,7 +38,6 @@ class OneOrder extends Component{
     }
 
   render() {
-      console.log(this.props.order)
     let street = this.props.order.street ? (this.props.order.street) : ('')
     let house = this.props.order.house ? ( '   д. ' + this.props.order.house) : ('')
     let porch = this.props.order.porch ? ( '   пд. ' + this.props.order.porch) : ('')
