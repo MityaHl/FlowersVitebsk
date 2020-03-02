@@ -37,6 +37,7 @@ class Create extends Component {
                 codes: [],
                 payStatus: false
             },
+            isShowButton: true,
             redirect: false, 
             types: [], 
             streets: [],
@@ -156,14 +157,16 @@ class Create extends Component {
         console.log(this.state.orderData);
         axios
             .post('https://flora-vitebsk.herokuapp.com/addOrder', this.state.orderData)
-            .then(
+            .then(()=> {
+                this.setState({
+                    isShowButton: false,
+                })
                 setTimeout(()=>{
                     this.setState({
                         redirect: true
                     })
                 }, 1000)
-                
-            )
+            })
             
     }
 
@@ -171,11 +174,9 @@ class Create extends Component {
         if (this.state.redirect) {
             return <Redirect to='/list'/>;
         }
-
+        console.log(this.state.isShowButton)
         return(
             <div className="create container">
-                <form onSubmit={this.saveOrder}>
-                            
                             <div className="form-group">
                                 <h5>Дата доставки:</h5>
                                 <input type='date' className="form-control" name="date" value={this.state.orderData.date} onChange={this.handleChange}></input>
@@ -217,7 +218,6 @@ class Create extends Component {
                                                 customerNumberCode: value.name
                                             }
                                         });
-                                        console.log(this.state.orderData);
                                     }}
                                 />
                                     <input type="text" className="form-control col-5" name="customerNumber" value={this.state.orderData.customerNumber} onChange={this.handleChange}/>
@@ -243,7 +243,6 @@ class Create extends Component {
                                                 receiverNumberCode: value.name
                                             }
                                         });
-                                        console.log(this.state.orderData);
                                     }}
                                 />
                                     <input type="text" className="form-control col-5" name="receiverNumber" value={this.state.orderData.receiverNumber} onChange={this.handleChange}/>
@@ -328,10 +327,15 @@ class Create extends Component {
                                 <h5 htmlFor="name">Примечание:</h5>
                                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" name="notes"  value={this.state.orderData.notes} onChange={this.handleChange}></textarea>
                             </div>
-                            <div className="create-button">
-                                <button className="btn btn-primary">Добавить заказ</button>
-                            </div>
-                        </form>
+                            {
+                                this.state.isShowButton ? (
+                                    <div className="create-button">
+                                        <button className="btn btn-primary" onClick={this.saveOrder}>Добавить заказ</button>
+                                    </div>
+                                ) : (
+                                    <div></div>
+                                )
+                            }
             </div>
         )
     }
