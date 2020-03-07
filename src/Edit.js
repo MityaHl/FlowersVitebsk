@@ -312,7 +312,7 @@ class Edit extends Component {
                                 <h5 htmlFor="name">Статус заказа:</h5>
                                 <DropdownList
                                     value={this.state.order.status}
-                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Постер', className: 'order-done'}]}
+                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Постер', className: 'order-done'}, {val: 'Отдан курьеру', className: 'courier-order'}]}
                                     textField="val"
                                     valueField="className"
                                     onChange={value => {

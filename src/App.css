@@ -181,6 +181,14 @@ td {
   background-color: #F9FFAD;
 }
 
+.courier-order {
+  background-color: #FF8FE2;
+}
+
+.courier-order:hover {
+  background-color: #FF6BF3;
+}
+
 .order-ready:hover {
   background-color: #F8E85D;
 }

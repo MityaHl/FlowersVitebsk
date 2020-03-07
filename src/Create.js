@@ -309,7 +309,7 @@ class Create extends Component {
                                 <h5 htmlFor="name">Статус заказа:</h5>
                                 <DropdownList
                                     defaultValue={{val: 'Принят', className: 'order-accepted'}}
-                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Постер', className: 'order-done'}]}
+                                    data={[{val: 'Принят', className: 'order-accepted'}, {val: 'Готов', className: 'order-ready'}, {val: 'Постер', className: 'order-done'}, {val: 'Отдан курьеру', className: 'courier-order'}]}
                                     textField="val"
                                     valueField="className"
                                     onChange={value => {
